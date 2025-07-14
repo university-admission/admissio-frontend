@@ -1,0 +1,26 @@
+{
+  "name": "admissio-frontend",
+  "version": "1.0.0",
+  "description": "Сервіс фронтенду для проєкту Admissio — система прогнозування шансів вступу до університету.",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "lite-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/university-admission/admissio-frontend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/university-admission/admissio-frontend/issues"
+  },
+  "homepage": "https://github.com/university-admission/admissio-frontend#readme",
+  "devDependencies": {
+    "lite-server": "^2.6.1",
+    "typescript": "^5.8.3"
+  }
+}

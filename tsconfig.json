@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "types": [],
+    "target": "es6",
+    "module": "es6",
+    "outDir": "public/js",
+    "rootDir": "src",
+    "strict": true
+  },
+  "include": ["src"]
+}
