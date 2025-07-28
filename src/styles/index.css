@@ -1,0 +1,90 @@
+@import 'common.css';
+
+main.container > section {
+    max-width: var(--max-width);
+}
+
+form {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: var(--spacing);
+    align-items: center;
+}
+
+form label {
+    font-weight: bold;
+    text-align: right;
+    padding-right: var(--spacing);
+}
+
+input[type="number"],
+select,
+input[list] {
+    padding: .75em;
+    border: 1px solid #BDC3C7;
+    border-radius: 4px;
+    background: white;
+    width: 100%;
+    font-size: 1rem;
+}
+
+.elective-group {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 10px;
+}
+
+form > button.form-full-width {
+    grid-column: 1 / -1;
+    margin-top: var(--spacing);
+}
+
+.places-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px 15px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+.popup-content {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 40px;
+}
+
+.popup-column h3 {
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    margin-bottom: var(--spacing);
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.popup-content p {
+    font-size: .9rem;
+    line-height: 1.6;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+
+.popup-content p span {
+    font-weight: normal;
+    color: var(--text-color);
+}
+
+button {
+    padding: 0.75em;
+    background: var(--secondary-color);
+    border: none;
+    color: white;
+    font-size: 1rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+}
+
+button:hover {
+    background: var(--button-hover);
+}
