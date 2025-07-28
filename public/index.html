@@ -1,12 +1,255 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Bezukh Danylo & Ankudovich Grigoriy">
-    <title>Admissio Frontend</title>
+    <meta name="author" content="Bezukh Danylo">
+    <link rel="stylesheet" href="../src/styles/index.css">
+    <title>E-Budget</title>
 </head>
 <body>
-    <H1>Hello World!</H1>
+<header>
+    <h1>Є-Бюджет</h1>
+    <nav>
+        <a href="./index.html">Головна</a>
+        <a href="./tracked-offers.html">Відстежувані</a>
+    </nav>
+</header>
+<main class="container">
+    <section>
+        <h2>Оцінки абітурієнта</h2>
+        <form id="scores-form">
+            <label for="math_field">Математика:</label>
+            <input type="number" id="math_field" min="0" max="200" required>
+
+            <label for="uk_lang_field">Українська мова:</label>
+            <input type="number" id="uk_lang_field" min="0" max="200" required>
+
+            <label for="history_field">Історія:</label>
+            <input type="number" id="history_field" min="0" max="200" required>
+
+            <label for="elective_subject_select">Предмет на вибір:</label>
+            <div class="elective-group">
+                <select id="elective_subject_select">
+                    <option value="uk_lit">Українська література</option>
+                    <option value="foreign_lang">Іноземна мова</option>
+                    <option value="biology">Біологія</option>
+                    <option value="geography">Географія</option>
+                    <option value="physics">Фізика</option>
+                    <option value="chemistry">Хімія</option>
+                </select>
+                <input type="number" id="elective_subject_field" min="0" max="200" required placeholder="Бал">
+            </div>
+
+            <label for="competition_field">Творчий конкурс:</label>
+            <input type="number" id="competition_field" min="0" max="200">
+
+            <label for="admission_type">Тип вступу:</label>
+            <select id="admission_type">
+                <option value="budget">Бюджет</option>
+                <option value="quota-1">Квота 1</option>
+                <option value="quota-2">Квота 2</option>
+                <option value="contract">Контракт</option>
+            </select>
+
+            <button type="submit" class="form-full-width">Зберегти оцінки</button>
+        </form>
+    </section>
+    <section>
+        <h2>Пошук пропозицій</h2>
+        <form id="search-form">
+            <label for="major_field">Спеціальність:</label>
+            <input list="majors" id="major_field">
+            <datalist id="majors">
+                <!-- Auto-generated code -->
+                <option value="f1">Прикладна математика, 113</option>
+                <option value="f2">Інженерія програмного забезпечення, 121</option>
+            </datalist>
+            <label for="region_field">Регіон:</label>
+            <input list="regions" id="region_field">
+            <datalist id="regions">
+                <!-- Auto-generated code -->
+                <option value="м. Київ"></option>
+                <option value="Дніпропетровська область"></option>
+            </datalist>
+            <label for="university_field">Університет:</label>
+            <input list="universities" id="university_field">
+            <datalist id="universities">
+                <!-- Auto-generated code -->
+                <option value='Національний Університет "Києво-Могилянська Академія"'></option>
+                <option value='Національний технічний університет України «Київський політехнічний інститут імені Ігоря Сікорського»'></option>
+            </datalist>
+            <label for="education-form">Форма навчання:</label>
+            <select id="education-form">
+                <option value="all">Усі</option>
+                <option value="full-time">Денна</option>
+                <option value="part-time">Заочна</option>
+                <option value="evening">Вечірня</option>
+                <option value="distance">Дистанційна</option>
+            </select>
+            <button type="submit" class="form-full-width">Пошук</button>
+        </form>
+    </section>
+    <section>
+        <h2 id="result">Результати пошуку, кількість пропозицій: <span>2</span></h2>
+        <div class="offers-list" id="offers-list">
+            <!-- Auto-generated code -->
+            <div class="offer-card" id="1" onclick="document.getElementById('popup').style.display='block'; document.getElementById('popup-overlay').style.display='block'">
+                <h3>Національний Університет "Києво-Могилянська Академія"</h3>
+                <p><strong>Спеціальність:</strong> Інженерія програмного забезпечення</p>
+                <p><strong>Факультет:</strong> ФІ</p>
+                <div class="places-info">
+                    <p><strong>Бюджет:</strong> 150</p>
+                    <p><strong>Квота-1:</strong> 15</p>
+                    <p><strong>Контракт:</strong> 200</p>
+                    <p><strong>Квота-2:</strong> 10</p>
+                </div>
+                <button onclick="event.stopPropagation(); alert('Button pressed')">Відстежувати</button>
+            </div>
+            <div class="offer-card" id="2"
+                 onclick="document.getElementById('popup').style.display='block'; document.getElementById('popup-overlay').style.display='block'">
+                <h3>Національний технічний університет України «Київський політехнічний інститут імені Ігоря
+                    Сікорського»</h3>
+                <p><strong>Спеціальність:</strong> Інженерія програмного забезпечення</p>
+                <p><strong>Факультет:</strong> ФІ</p>
+                <div class="places-info">
+                    <p><strong>Бюджет:</strong> 150</p>
+                    <p><strong>Квота-1:</strong> 15</p>
+                    <p><strong>Контракт:</strong> 200</p>
+                    <p><strong>Квота-2:</strong> 10</p>
+                </div>
+                <button onclick="event.stopPropagation() ;alert('Button pressed')">Відстежувати</button>
+            </div>
+        </div>
+    </section>
+</main>
+<div id="popup-overlay" class="popup-overlay"></div>
+<div id="popup" class="popup">
+    <div class="popup-header">
+        <h3 id="popup-title">Детальна інформація</h3>
+        <button id="popup-close" class="popup-close"
+                onclick="document.getElementById('popup').style.display='none'; document.getElementById('popup-overlay').style.display='none'">
+            &times;
+        </button>
+    </div>
+    <div id="popup-content" class="popup-content">
+        <div class="popup-column">
+            <div id="offer-info" class="offer-info">
+                <h3>Інформація про пропозицію</h3>
+                <p id="popup-university">Університет: <span>Національний Університет "Києво-Могилянська Академія"</span>
+                </p>
+                <p id="popup-region">Регіон: <span>м. Київ</span></p>
+                <p id="popup-offer-name">Пропозиція: <span>Інженерія програмного забезпечення</span></p>
+                <p id="popup-major-name">Спеціальність: <span>F2, Інженерія програмного забезпечення</span></p>
+                <p id="popup-faculty">Факультет: <span>ФІ</span></p>
+                <p id="popup-study-form">Форма навчання: <span>Денна</span></p>
+            </div>
+            <table id="offer-places" class="data-table">
+                <thead>
+                <tr>
+                    <th>Тип заявки</th>
+                    <th>Всього місць</th>
+                    <th>Подані заявки</th>
+                    <th>Мін. прохідний бал</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr id="budget-row">
+                    <td>Бюджет</td>
+                    <td class="text-right">60</td>
+                    <td class="text-right">250</td>
+                    <td class="text-right">151</td>
+                </tr>
+                <tr id="quota1-row">
+                    <td>Квота 1</td>
+                    <td class="text-right">6</td>
+                    <td class="text-right">25</td>
+                    <td class="text-right">121</td>
+                </tr>
+                <tr id="quota2-row">
+                    <td>Квота 2</td>
+                    <td class="text-right">6</td>
+                    <td class="text-right">25</td>
+                    <td class="text-right">121</td>
+                </tr>
+                <tr id="contract-row">
+                    <td>Контракт</td>
+                    <td class="text-right">200</td>
+                    <td class="text-right">650</td>
+                    <td class="text-right">151</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="popup-column">
+            <div class="coef-info">
+                <h3>Коефіцієнти</h3>
+                <p id="popup-region-coef">Регіональний: <span>1</span></p>
+                <p id="popup-major-coef">Спеціальності: <span>1</span></p>
+            </div>
+            <table id="major-info" class="data-table">
+                <thead>
+                <tr>
+                    <th>Предмет</th>
+                    <th>Коефіцієнт</th>
+                    <th>Мін. прохідний бал</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr id="math-row">
+                    <td>Математика</td>
+                    <td class="text-right">0.3</td>
+                    <td class="text-right">120</td>
+                </tr>
+                <tr id="uk-lang-row">
+                    <td>Укр. мова</td>
+                    <td class="text-right">0.3</td>
+                    <td class="text-right">120</td>
+                </tr>
+                <tr id="history-row">
+                    <td>Історія</td>
+                    <td class="text-right">0.3</td>
+                    <td class="text-right">120</td>
+                </tr>
+                <tr id="uk-lit-row">
+                    <td>Укр. літ.</td>
+                    <td class="text-right">0.3</td>
+                    <td class="text-right">120</td>
+                </tr>
+                <tr id="foreign-lang-row">
+                    <td>Іноземна мова</td>
+                    <td class="text-right">0.3</td>
+                    <td class="text-right">120</td>
+                </tr>
+                <tr id="biology-row">
+                    <td>Біологія</td>
+                    <td class="text-right">0.3</td>
+                    <td class="text-right">120</td>
+                </tr>
+                <tr id="geography-row">
+                    <td>Географія</td>
+                    <td class="text-right">0.3</td>
+                    <td class="text-right">120</td>
+                </tr>
+                <tr id="physics-row">
+                    <td>Фізика</td>
+                    <td class="text-right">0.3</td>
+                    <td class="text-right">120</td>
+                </tr>
+                <tr id="chemistry-row">
+                    <td>Хімія</td>
+                    <td class="text-right">0.3</td>
+                    <td class="text-right">120</td>
+                </tr>
+                <tr id="competition-row">
+                    <td>Творчий конкурс</td>
+                    <td class="text-right">0.3</td>
+                    <td class="text-right">120</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 </body>
 </html>
