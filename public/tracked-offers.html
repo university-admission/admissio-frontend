@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Bezukh Danylo">
+    <link rel="stylesheet" href="../src/styles/tracked-offer.css">
+    <title>E-Budget</title>
+</head>
+<body>
+<header>
+    <h1>Є-Бюджет</h1>
+    <nav>
+        <a href="./index.html">Головна</a>
+        <a href="./tracked-offers.html">Відстежувані</a>
+    </nav>
+</header>
+<main>
+    <h2>Відстежуванні пропозиції (<span id="application-type">Бюджет, 2</span>)</h2>
+    <br>
+    <div class="offers-list" id="offers-list">
+        <div class="offer-card" id="1"
+             onclick="document.getElementById('offer-popup').style.display='block'; document.getElementById('popup-overlay').style.display='block'">
+            <h3>Національний Університет "Києво-Могилянська Академія"</h3>
+            <p><strong>Спеціальність: </strong>Інженерія програмного забезпечення</p>
+            <p><strong>Факультет: </strong>ФІ</p>
+            <p><strong>Ваш бал: </strong>183.4</p>
+            <p><strong>Ваше місце (актуальні пропозиції): </strong><span class="save-place">10/15</span></p>
+            <p><strong>Ваше місце (усі пропозиції): </strong><span class="save-place">10/15</span></p>
+            <button onclick="event.stopPropagation(); alert('Button pressed')">Перестати відстежувати</button>
+        </div>
+        <div class="offer-card" id="2"
+             onclick="document.getElementById('offer-popup').style.display='block'; document.getElementById('popup-overlay').style.display='block'">
+            <h3>Національний технічний університет України «Київський політехнічний інститут імені Ігоря
+                Сікорського»</h3>
+            <p><strong>Спеціальність:</strong> Інженерія програмного забезпечення</p>
+            <p><strong>Факультет:</strong> ФІ</p>
+            <p><strong>Ваш бал: </strong>183.4</p>
+            <p><strong>Ваше місце (актуальні пропозиції): </strong><span class="dangerous-place">15/15</span></p>
+            <p><strong>Ваше місце (усі пропозиції): </strong><span class="impassable-place">20/15</span></p>
+            <button onclick="event.stopPropagation() ;alert('Button pressed')">Перестати відстежувати</button>
+        </div>
+        <div class="offer-card" id="3"
+             onclick="document.getElementById('offer-popup').style.display='block'; document.getElementById('popup-overlay').style.display='block'">
+            <h3>Український католицький Університет</h3>
+            <p><strong>Спеціальність:</strong> Успішний успіх</p>
+            <p><strong>Факультет:</strong> ФІФ</p>
+            <p><strong>Ваш бал: </strong>200</p>
+            <p><strong>Ваше місце (актуальні пропозиції): </strong><span class="impassable-place">22/15</span></p>
+            <p><strong>Ваше місце (усі пропозиції): </strong><span class="impassable-place">22/15</span></p>
+            <button onclick="event.stopPropagation() ;alert('Button pressed')">Перестати відстежувати</button>
+        </div>
+    </div>
+</main>
+<div id="popup-overlay" class="popup-overlay"></div>
+<div id="offer-popup" class="popup">
+    <div class="popup-header">
+        <h3 id="offer-popup-title">Список заяв</h3>
+        <button id="offer-popup-close" class="popup-close"
+                onclick="document.getElementById('offer-popup').style.display='none'; document.getElementById('popup-overlay').style.display='none'">
+            &times;
+        </button>
+    </div>
+    <div id="offer-popup-content" class="popup-content">
+        <div id="offer-info">
+            <h3>Інформація про пропозицію</h3>
+            <p id="popup-university">Університет: <span>Національний Університет "Києво-Могилянська Академія"</span>
+            </p>
+            <p id="popup-offer-name">Пропозиція: <span>Інженерія програмного забезпечення</span></p>
+            <p id="popup-faculty">Факультет: <span>ФІ</span></p>
+            <p id="popup-study-form">Форма навчання: <span>Денна</span></p>
+            <p id="user-actual-place">Ваше місце (актуальні пропозиції): <span class="save-place">3/15</span></p>
+            <p id="user-all-place">Ваше місце (усі пропозиції): <span class="save-place">4/15</span></p>
+        </div>
+        <table id="application-table" class="data-table">
+            <thead>
+            <tr>
+                <th>№</th>
+                <th>Студент</th>
+                <th>Прохідний бал</th>
+                <th>Пріорітет</th>
+                <th>Актуальна</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr id="studentId_1" onclick="document.getElementById('student-popup').style.display='block';">
+                <th>1</th>
+                <th>Іванов І. І.</th>
+                <th>300</th>
+                <th>1</th>
+                <th>так</th>
+            </tr>
+            <tr >
+                <th>2</th>
+                <th>Петренко П. П.</th>
+                <th>299</th>
+                <th>2</th>
+                <th>так</th>
+            </tr>
+            <tr class="not-actual">
+                <th>3</th>
+                <th>Петренко П. П.</th>
+                <th>299</th>
+                <th>2</th>
+                <th>ні</th>
+            </tr>
+            <tr class="user-application">
+                <th>4</th>
+                <th>Ви</th>
+                <th>183.4</th>
+                <th>-</th>
+                <th>-</th>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div id="student-popup" class="popup">
+    <div class="popup-header">
+        <h3 id="student-popup-title">Список заяв студента <span>Іванова І. І.</span></h3>
+        <button id="student-popup-close" class="popup-close"
+                onclick="document.getElementById('student-popup').style.display='none';">
+            &times;
+        </button>
+    </div>
+    <div id="popup-content" class="popup-content">
+        <table id="student-application-table" class="data-table">
+            <thead>
+            <tr>
+                <th>Пріорітет</th>
+                <th>Актуальна</th>
+                <th>Прохідний бал</th>
+                <th>Тип</th>
+                <th>Університет</th>
+                <th>Факультет</th>
+                <th>Спеціальність</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th>1</th>
+                <th>так</th>
+                <th>200</th>
+                <th>Бюджет</th>
+                <th>Національний Університет "Києво-Могилянська Академія"</th>
+                <th>Фі</th>
+                <th>F1, Інженерія програмного забезпечення</th>
+            </tr>
+            <tr>
+                <th>2</th>
+                <th>так</th>
+                <th>200</th>
+                <th>Бюджет</th>
+                <th>Національний Університет "Києво-Могилянська Академія"</th>
+                <th>Фі</th>
+                <th>F1, Інженерія програмного забезпечення</th>
+            </tr>
+            <tr>
+                <th>3</th>
+                <th>так</th>
+                <th>200</th>
+                <th>Бюджет</th>
+                <th>Національний Університет "Києво-Могилянська Академія"</th>
+                <th>Фі</th>
+                <th>F1, Інженерія програмного забезпечення</th>
+            </tr>
+            <tr>
+                <th>4</th>
+                <th>так</th>
+                <th>200</th>
+                <th>Бюджет</th>
+                <th>Національний Університет "Києво-Могилянська Академія"</th>
+                <th>Фі</th>
+                <th>F1, Інженерія програмного забезпечення</th>
+            </tr>
+            <tr>
+                <th>5</th>
+                <th>так</th>
+                <th>200</th>
+                <th>Бюджет</th>
+                <th>Національний Університет "Києво-Могилянська Академія"</th>
+                <th>Фі</th>
+                <th>F1, Інженерія програмного забезпечення</th>
+            </tr>
+            <tr>
+                <th>6</th>
+                <th>так</th>
+                <th>200</th>
+                <th>Контракт</th>
+                <th>Національний Університет "Києво-Могилянська Академія"</th>
+                <th>Фі</th>
+                <th>F1, Інженерія програмного забезпечення</th>
+            </tr>
+            <tr>
+                <th>7</th>
+                <th>так</th>
+                <th>200</th>
+                <th>Контракт</th>
+                <th>Національний Університет "Києво-Могилянська Академія"</th>
+                <th>Фі</th>
+                <th>F1, Інженерія програмного забезпечення</th>
+            </tr>
+            <tr>
+                <th>8</th>
+                <th>так</th>
+                <th>200</th>
+                <th>Контракт</th>
+                <th>Національний Університет "Києво-Могилянська Академія"</th>
+                <th>Фі</th>
+                <th>F1, Інженерія програмного забезпечення</th>
+            </tr>
+            <tr>
+                <th>9</th>
+                <th>так</th>
+                <th>200</th>
+                <th>Контракт</th>
+                <th>Національний Університет "Києво-Могилянська Академія"</th>
+                <th>Фі</th>
+                <th>F1, Інженерія програмного забезпечення</th>
+            </tr>
+            <tr>
+                <th>10</th>
+                <th>так</th>
+                <th>200</th>
+                <th>Контракт</th>
+                <th>Національний Університет "Києво-Могилянська Академія"</th>
+                <th>Фі</th>
+                <th>F1, Інженерія програмного забезпечення</th>
+            </tr>
+            <tr>
+                <th>11</th>
+                <th>так</th>
+                <th>200</th>
+                <th>Контракт</th>
+                <th>Національний Університет "Києво-Могилянська Академія"</th>
+                <th>Фі</th>
+                <th>F1, Інженерія програмного забезпечення</th>
+            </tr>
+            <tr>
+                <th>12</th>
+                <th>так</th>
+                <th>200</th>
+                <th>Контракт</th>
+                <th>Національний Університет "Києво-Могилянська Академія"</th>
+                <th>Фі</th>
+                <th>F1, Інженерія програмного забезпечення</th>
+            </tr>
+            <tr>
+                <th>13</th>
+                <th>так</th>
+                <th>200</th>
+                <th>Контракт</th>
+                <th>Національний Університет "Києво-Могилянська Академія"</th>
+                <th>Фі</th>
+                <th>F1, Інженерія програмного забезпечення</th>
+            </tr>
+            <tr>
+                <th>14</th>
+                <th>так</th>
+                <th>200</th>
+                <th>Контракт</th>
+                <th>Національний Університет "Києво-Могилянська Академія"</th>
+                <th>Фі</th>
+                <th>F1, Інженерія програмного забезпечення</th>
+            </tr>
+            <tr>
+                <th>15</th>
+                <th>так</th>
+                <th>200</th>
+                <th>Контракт</th>
+                <th>Національний Університет "Києво-Могилянська Академія"</th>
+                <th>Фі</th>
+                <th>F1, Інженерія програмного забезпечення</th>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
