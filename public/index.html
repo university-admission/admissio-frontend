@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Bezukh Danylo">
-    <link rel="stylesheet" href="../src/styles/index.css">
+    <link rel="stylesheet" href="./css/index.css">
     <title>E-Budget</title>
 </head>
 <body>
@@ -19,18 +19,18 @@
     <section>
         <h2>Оцінки абітурієнта</h2>
         <form id="scores-form">
-            <label for="math_field">Математика:</label>
-            <input type="number" id="math_field" min="0" max="200" required>
+            <label for="math-field">Математика:</label>
+            <input type="number" id="math-field" min="0" max="200" required>
 
-            <label for="uk_lang_field">Українська мова:</label>
-            <input type="number" id="uk_lang_field" min="0" max="200" required>
+            <label for="uk-lang-field">Українська мова:</label>
+            <input type="number" id="uk-lang-field" min="0" max="200" required>
 
-            <label for="history_field">Історія:</label>
-            <input type="number" id="history_field" min="0" max="200" required>
+            <label for="history-field">Історія:</label>
+            <input type="number" id="history-field" min="0" max="200" required>
 
-            <label for="elective_subject_select">Предмет на вибір:</label>
+            <label for="elective-subject-select">Предмет на вибір:</label>
             <div class="elective-group">
-                <select id="elective_subject_select">
+                <select id="elective-subject-select">
                     <option value="uk_lit">Українська література</option>
                     <option value="foreign_lang">Іноземна мова</option>
                     <option value="biology">Біологія</option>
@@ -52,7 +52,7 @@
                 <option value="contract">Контракт</option>
             </select>
 
-            <button type="submit" class="form-full-width">Зберегти оцінки</button>
+            <button id="score-button" type="submit" class="form-full-width">Зберегти оцінки</button>
         </form>
     </section>
     <section>
@@ -255,4 +255,5 @@
     </div>
 </div>
 </body>
+<script type="module" src="./js/index/main.js"></script>
 </html>
