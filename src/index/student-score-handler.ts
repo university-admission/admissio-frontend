@@ -1,7 +1,9 @@
 
 const button = document.getElementById("score-button") as HTMLButtonElement;
 const form = document.getElementById("scores-form") as HTMLFormElement;
-button.addEventListener("click", () => {
+button.addEventListener("click", (event) => {
+    event.preventDefault();
+
     if (!form.checkValidity()) {
         form.reportValidity();
         return;
