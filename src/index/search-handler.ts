@@ -1,9 +1,10 @@
-import { Region, University } from "../common/types.js";
+import {Major, Region, University} from "../common/types.js";
 
 const regionInput = document.getElementById("region-field") as HTMLInputElement;
 const universityInput = document.getElementById("university-field") as HTMLInputElement;
 const regionsList = document.getElementById("regions") as HTMLDataListElement;
 const universityList = document.getElementById("universities") as HTMLDataListElement;
+const majorList = document.getElementById("majors") as HTMLDataListElement;
 
 regionInput.addEventListener("change", () => {
     const selectedOption = Array.from(regionsList.options).find(
@@ -20,8 +21,29 @@ regionInput.addEventListener("change", () => {
 });
 
 export function loadData(): void {
+    loadMajor();
     loadRegions();
     loadUniversities();
+}
+
+function loadMajor(): void {
+    fetch('http://localhost:8080/majors')
+        .then(response => {
+            if (!response.ok)
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            return response.json();
+        })
+    .then((data: Major[]) => {
+        majorList.replaceChildren();
+        data.forEach(major =>{
+            const option = document.createElement("option");
+            option.value = major.majorCode;
+            option.textContent = major.majorName;
+            option.dataset.id = String(major.id);
+            majorList.appendChild(option);
+        });
+    })
+    .catch((error: Error) => console.error("Error loading majors:", error))
 }
 
 function loadRegions(): void {
@@ -40,7 +62,7 @@ function loadRegions(): void {
                 regionsList.appendChild(option);
             });
         })
-        .catch(error => console.error("Error loading regions:", error));
+        .catch((error: Error) => console.error("Error loading regions:", error));
 }
 
 function loadUniversities(regionId: string = ""): void {
@@ -59,5 +81,5 @@ function loadUniversities(regionId: string = ""): void {
                 universityList.appendChild(option);
             });
         })
-        .catch(error => console.error("Error loading universities:", error));
+        .catch((error: Error ) => console.error("Error loading universities:", error));
 }
