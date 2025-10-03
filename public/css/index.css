@@ -34,6 +34,14 @@ input[list] {
     gap: 10px;
 }
 
+button.tracked{
+    background: var(--button-tracked);
+}
+
+button.tracked:hover {
+    background: var(--button-tracked-hover);
+}
+
 form > button.form-full-width {
     grid-column: 1 / -1;
     margin-top: var(--spacing);

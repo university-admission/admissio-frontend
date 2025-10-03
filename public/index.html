@@ -62,8 +62,6 @@
             <input list="majors" id="major-field">
             <datalist id="majors">
                 <!-- Auto-generated code -->
-                <option value="f1">Прикладна математика, 113</option>
-                <option value="f2">Інженерія програмного забезпечення, 121</option>
             </datalist>
             <label for="region-field">Регіон:</label>
             <input list="regions" id="region-field">
@@ -77,45 +75,15 @@
             </datalist>
             <label for="education-form">Форма навчання:</label>
             <select id="education-form">
-                <option value="all">Усі</option>
-                <option value="full-time">Денна</option>
-                <option value="part-time">Заочна</option>
-                <option value="evening">Вечірня</option>
-                <option value="distance">Дистанційна</option>
+                <!-- Auto-generated code -->
             </select>
-            <button class="form-full-width">Пошук</button>
+            <button id="search-button" type="submit" class="form-full-width">Пошук</button>
         </form>
     </section>
     <section>
-        <h2 id="result">Результати пошуку, кількість пропозицій: <span>2</span></h2>
+        <h2 id="result">Тут будуть відображатися пропозиції після пошуку: <span id="offersCount"></span></h2>
         <div class="offers-list" id="offers-list">
             <!-- Auto-generated code -->
-            <div class="offer-card" id="1" onclick="document.getElementById('popup').style.display='block'; document.getElementById('popup-overlay').style.display='block'">
-                <h3>Національний Університет "Києво-Могилянська Академія"</h3>
-                <p><strong>Спеціальність:</strong> Інженерія програмного забезпечення</p>
-                <p><strong>Факультет:</strong> ФІ</p>
-                <div class="places-info">
-                    <p><strong>Бюджет:</strong> 150</p>
-                    <p><strong>Квота-1:</strong> 15</p>
-                    <p><strong>Контракт:</strong> 200</p>
-                    <p><strong>Квота-2:</strong> 10</p>
-                </div>
-                <button onclick="event.stopPropagation(); alert('Button pressed')">Відстежувати</button>
-            </div>
-            <div class="offer-card" id="2"
-                 onclick="document.getElementById('popup').style.display='block'; document.getElementById('popup-overlay').style.display='block'">
-                <h3>Національний технічний університет України «Київський політехнічний інститут імені Ігоря
-                    Сікорського»</h3>
-                <p><strong>Спеціальність:</strong> Інженерія програмного забезпечення</p>
-                <p><strong>Факультет:</strong> ФІ</p>
-                <div class="places-info">
-                    <p><strong>Бюджет:</strong> 150</p>
-                    <p><strong>Квота-1:</strong> 15</p>
-                    <p><strong>Контракт:</strong> 200</p>
-                    <p><strong>Квота-2:</strong> 10</p>
-                </div>
-                <button onclick="event.stopPropagation() ;alert('Button pressed')">Відстежувати</button>
-            </div>
         </div>
     </section>
 </main>
@@ -132,15 +100,14 @@
         <div class="popup-column">
             <div id="offer-info" class="offer-info">
                 <h3>Інформація про пропозицію</h3>
-                <p id="popup-university">Університет: <span>Національний Університет "Києво-Могилянська Академія"</span>
-                </p>
+                <p id="popup-university">Університет: <span>Національний Університет "Києво-Могилянська Академія"</span></p>
                 <p id="popup-region">Регіон: <span>м. Київ</span></p>
                 <p id="popup-offer-name">Пропозиція: <span>Інженерія програмного забезпечення</span></p>
                 <p id="popup-major-name">Спеціальність: <span>F2, Інженерія програмного забезпечення</span></p>
                 <p id="popup-education-program">Навчальна програма: <span>Інженерія програмного забезпечення</span></p>
                 <p id="popup-faculty">Факультет: <span>ФІ</span></p>
                 <p id="popup-study-form">Форма навчання: <span>Денна</span></p>
-                <p id="popup-price">Вартість: <span>100000 $</span></p>
+                <p id="popup-price">Вартість: <span>100000</span> грн за рік</p>
                 <p id="popup-min-application-score">Мінімальний прохідний бал: <span>201</span></p>
             </div>
             <table id="offer-places" class="data-table">
