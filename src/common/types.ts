@@ -1,8 +1,6 @@
-export class Region {
-    constructor(public id: number, public region: string) {
-        this.id = id;
-        this.region = region;
-    }
+export interface Region {
+    id: number;
+    region: string;
 }
 
 export class University {
@@ -13,99 +11,63 @@ export class University {
     }
 }
 
-export class Major{
-    constructor(public id:number, public majorName: string, public majorCode: string,
-                public ukLanguageCoef: number, public mathCoef: number,
-                public historyCoef: number, public ukLiteratureCoef: number,
-                public foreignLangCoef: number, public biologyCoef: number,
-                public geographyCoef: number, public physicsCoef: number,
-                public chemistryCoef: number, public competitionCoef: number,
-                public coef : number) {
-        this.id = id;
-        this.majorName = majorName;
-        this.majorCode = majorCode;
-        this.ukLanguageCoef = ukLanguageCoef;
-        this.mathCoef = mathCoef;
-        this.historyCoef = historyCoef;
-        this.ukLiteratureCoef = ukLiteratureCoef;
-        this.foreignLangCoef = foreignLangCoef;
-        this.biologyCoef = biologyCoef;
-        this.geographyCoef = geographyCoef;
-        this.physicsCoef = physicsCoef;
-        this.chemistryCoef = chemistryCoef;
-        this.competitionCoef = competitionCoef;
-        this.coef = coef;
-    }
+export interface Major{
+    id:number;
+    majorName: string;
+    majorCode: string;
+    ukLanguageCoef: number;
+    mathCoef: number;
+    historyCoef: number;
+    ukLiteratureCoef: number;
+    foreignLangCoef: number;
+    biologyCoef: number;
+    geographyCoef: number;
+    physicsCoef: number;
+    chemistryCoef: number;
+    competitionCoef: number;
+    coef : number;
 }
 
-function mapMajor(raw: any): Major {
-    return Object.assign(new Major(0, "", "", 0,0,0,0,0,0,0,0,0,0,0), raw);
-}
-
-export class Offer{
-    constructor(public id: number, public edboId: number,
-                public major: Major, public universityName: string, public regionName: string,
-                public name: string, public faculty: string,
-                public educationalProgram: string, public price: number,
-                public educationForm: string, public budgetPlaces: number, public budgetApplications: number,
-                public budgetPlacesCount: number, public minBudgetScore: number,
-                public contractPlaces: number, public contractApplications: number, public contractPlacesCount: number,
-                public minContractScore: number, public quota1Places: number, public quota1Applications: number,
-                public quota1PlacesCount: number, public minQuota1Score: number,
-                public quota2Places: number, public quota2Applications: number, public quota2PlacesCount: number,
-                public minQuota2Score: number, public minUkLangScore: number,
-                public minMathScore: number, public minHistoryScore: number,
-                public minUkLitScore: number, public minForeignLangScore: number,
-                public minBiologyScore: number, public minGeographyScore: number,
-                public minPhysicsScore: number, public minChemistryScore: number,
-                public minCompetitionScore: number, public minApplicationScore: number,
-                public additionalPoints: number, public regionCoef: number) {
-        this.id = id;
-        this.edboId = edboId;
-        this.major = major;
-        this.universityName = universityName;
-        this.regionName = regionName;
-        this.name = name;
-        this.faculty = faculty;
-        this.educationalProgram = educationalProgram;
-        this.price = price;
-        this.educationForm = educationForm;
-        this.budgetPlaces = budgetPlaces;
-        this.budgetApplications = budgetApplications;
-        this.budgetPlacesCount = budgetPlacesCount;
-        this.minBudgetScore = minBudgetScore;
-        this.contractPlaces = contractPlaces;
-        this.contractApplications = contractApplications;
-        this.contractPlacesCount = contractPlacesCount;
-        this.minContractScore = minContractScore;
-        this.quota1Places = quota1Places;
-        this.quota1Applications = quota1Applications;
-        this.quota1PlacesCount = quota1PlacesCount;
-        this.minQuota1Score = minQuota1Score;
-        this.quota2Places = quota2Places;
-        this.quota2Applications = quota2Applications;
-        this.quota2PlacesCount = quota2PlacesCount;
-        this.minQuota2Score = minQuota2Score;
-        this.minUkLangScore = minUkLangScore;
-        this.minMathScore = minMathScore;
-        this.minHistoryScore = minHistoryScore;
-        this.minUkLitScore = minUkLitScore;
-        this.minForeignLangScore = minForeignLangScore;
-        this.minBiologyScore = minBiologyScore;
-        this.minGeographyScore = minGeographyScore;
-        this.minPhysicsScore = minPhysicsScore;
-        this.minChemistryScore = minChemistryScore;
-        this.minCompetitionScore = minCompetitionScore;
-        this.minApplicationScore = minApplicationScore;
-        this.additionalPoints = additionalPoints;
-        this.regionCoef = regionCoef;
-    }
-}
-
-export function mapOffer(raw: any): Offer {
-    return Object.assign(new Offer(0, 0, new Major(0,"","",0,0,0,0,0,0,0,0,0,0,0), "", "", "", "", "", 0, "",0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0, 0), raw, {
-        major: mapMajor(raw.major)
-    });
+export interface Offer{
+    id: number;
+    edboId: number;
+    major: Major;
+    universityName: string;
+    regionName: string;
+    name: string;
+    faculty: string;
+    educationalProgram: string;
+    price: number;
+    educationForm: string;
+    budgetPlaces: number;
+    budgetApplications: number;
+    budgetPlacesCount: number;
+    minBudgetScore: number;
+    contractPlaces: number;
+    contractApplications: number;
+    contractPlacesCount: number;
+    minContractScore: number;
+    quota1Places: number;
+    quota1Applications: number;
+    quota1PlacesCount: number;
+    minQuota1Score: number;
+    quota2Places: number;
+    quota2Applications: number;
+    quota2PlacesCount: number;
+    minQuota2Score: number;
+    minUkLangScore: number;
+    minMathScore: number;
+    minHistoryScore: number;
+    minUkLitScore: number;
+    minForeignLangScore: number;
+    minBiologyScore: number;
+    minGeographyScore: number;
+    minPhysicsScore: number;
+    minChemistryScore: number;
+    minCompetitionScore: number;
+    minApplicationScore: number;
+    additionalPoints: number;
+    regionCoef: number;
 }
 
 export const educationFormLabels: Record<string, string> = {

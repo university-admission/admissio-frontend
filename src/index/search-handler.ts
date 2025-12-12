@@ -1,4 +1,4 @@
-import {educationFormLabels, Major, mapOffer, Offer, Region, University} from "../common/types.js";
+import {educationFormLabels, Major, Offer, Region, University} from "../common/types.js";
 import {renderOffersResponses} from "./offer-renderer.js";
 
 
@@ -92,7 +92,7 @@ function loadOffers(): void {
             return response.json();
         })
         .then((data: any[]) => {
-            const offers: Offer[] = data.map(mapOffer);
+            const offers: Offer[] = data;
             renderOffersResponses(offers);
         })
         .catch((error: Error) => console.error("Error loading Offers:", error))
