@@ -4,52 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Bezukh Danylo">
-    <link rel="stylesheet" href="css/tracked-offer.css">
+    <link rel="stylesheet" href="./css/tracked-offer.css">
     <title>E-Budget</title>
 </head>
 <body>
 <header>
     <h1>Є-Бюджет</h1>
     <nav>
-        <a href="index.html">Головна</a>
+        <a href="./index.html">Головна</a>
         <a href="./tracked-offers.html">Відстежувані</a>
     </nav>
 </header>
 <main>
-    <h2>Відстежуванні пропозиції (<span id="application-type">Бюджет, 2</span>)</h2>
+    <h2>
+        <span id="header">Відстежуванні пропозиції:</span>
+        <span id="application-type">Бюджет, 2</span>
+    </h2>
     <br>
     <div class="offers-list" id="offers-list">
-        <div class="offer-card" id="1"
-             onclick="document.getElementById('offer-popup').style.display='block'; document.getElementById('popup-overlay').style.display='block'">
-            <h3>Національний Університет "Києво-Могилянська Академія"</h3>
-            <p><strong>Спеціальність: </strong>Інженерія програмного забезпечення</p>
-            <p><strong>Факультет: </strong>ФІ</p>
-            <p><strong>Ваш бал: </strong>183.4</p>
-            <p><strong>Ваше місце (актуальні пропозиції): </strong><span class="save-place">10/15</span></p>
-            <p><strong>Ваше місце (усі пропозиції): </strong><span class="save-place">10/15</span></p>
-            <button onclick="event.stopPropagation(); alert('Button pressed')">Перестати відстежувати</button>
-        </div>
-        <div class="offer-card" id="2"
-             onclick="document.getElementById('offer-popup').style.display='block'; document.getElementById('popup-overlay').style.display='block'">
-            <h3>Національний технічний університет України «Київський політехнічний інститут імені Ігоря
-                Сікорського»</h3>
-            <p><strong>Спеціальність:</strong> Інженерія програмного забезпечення</p>
-            <p><strong>Факультет:</strong> ФІ</p>
-            <p><strong>Ваш бал: </strong>183.4</p>
-            <p><strong>Ваше місце (актуальні пропозиції): </strong><span class="dangerous-place">15/15</span></p>
-            <p><strong>Ваше місце (усі пропозиції): </strong><span class="impassable-place">20/15</span></p>
-            <button onclick="event.stopPropagation() ;alert('Button pressed')">Перестати відстежувати</button>
-        </div>
-        <div class="offer-card" id="3"
-             onclick="document.getElementById('offer-popup').style.display='block'; document.getElementById('popup-overlay').style.display='block'">
-            <h3>Український католицький Університет</h3>
-            <p><strong>Спеціальність:</strong> Успішний успіх</p>
-            <p><strong>Факультет:</strong> ФІФ</p>
-            <p><strong>Ваш бал: </strong>200</p>
-            <p><strong>Ваше місце (актуальні пропозиції): </strong><span class="impassable-place">22/15</span></p>
-            <p><strong>Ваше місце (усі пропозиції): </strong><span class="impassable-place">22/15</span></p>
-            <button onclick="event.stopPropagation() ;alert('Button pressed')">Перестати відстежувати</button>
-        </div>
+        <!-- Auto-generated code -->
     </div>
 </main>
 <div id="popup-overlay" class="popup-overlay"></div>
@@ -277,4 +250,5 @@
     </div>
 </div>
 </body>
+<script type="module" src="./js/index/tracked-offers.js"></script>
 </html>

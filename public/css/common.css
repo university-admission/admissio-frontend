@@ -128,6 +128,13 @@ section h2 {
     background: var(--button-hover);
 }
 
+button.tracked{
+    background: var(--button-tracked);
+}
+
+button.tracked:hover {
+    background: var(--button-tracked-hover);
+}
 
 .popup-overlay {
     position: fixed;

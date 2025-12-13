@@ -76,3 +76,14 @@ export const educationFormLabels: Record<string, string> = {
     "EVENING": "Вечірня форма",
     "DISTANCE": "Дистанційна форма",
 };
+
+export interface TrackedOffers{
+    offerId: number;
+    universityName: string;
+    majorName: string;
+    facultyName: string;
+    userScore: number;
+    rankActual: number;
+    rankAll: number;
+    places: number;
+}
