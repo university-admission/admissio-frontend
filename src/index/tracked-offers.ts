@@ -1,10 +1,11 @@
-import {TrackedOffers} from "../common/types.js";
+import {Application, TrackedOffers} from "../common/types.js";
 import {renderTrackedOffer} from "./tracked-offer-renderer.js"
 
 const header = document.getElementById("header") as HTMLSpanElement;
 export const applicationType = document.getElementById("application-type") as HTMLSpanElement;
 
 const offersList = document.getElementById("offers-list") as HTMLDivElement;
+const admissioType = localStorage.getItem("admission-type") || "budget";
 
 getTrackedOffers();
 
@@ -19,7 +20,6 @@ function getTrackedOffers() : void {
     const electiveSubjectScore = Number(localStorage.getItem("elective-subject-score"));
     const competitionScore = Number(localStorage.getItem("competition-score"));
     const trackedOffersRaw= localStorage.getItem("trackedOffers");
-    const admissioType = localStorage.getItem("admission-type") || "budget";
 
     if (!(admissioType && mathScore && ukLangScore && historyScore && electiveSubject && electiveSubjectScore)) {
         header.textContent = "Відстежуванні пропозиції не доступні, введіть на головній сторінці оцінку абітурієнта!";
@@ -89,9 +89,9 @@ function getTrackedOffers() : void {
         renderTrackedOffers(data);
     })
     .catch((error: Error) => {
-        console.error("Error loading tracked offers:", error);
+        console.error("Error loading tracked offers: ", error);
         offersList.innerHTML = `<p style="color: red; text-align: center;">Помилка завантаження даних. Спробуйте оновити сторінку.</p>`;
-    })
+    });
 }
 
 function renderTrackedOffers(offers: TrackedOffers[]): void {
@@ -101,4 +101,19 @@ function renderTrackedOffers(offers: TrackedOffers[]): void {
 
     for (const offer of offers)
         offersList.appendChild(renderTrackedOffer(offer));
+}
+
+export async function getApplications(offerId: number): Promise<Application[] | null> {
+    let quotaType: "GENERAL" | "QUOTA_1" | "QUOTA_2" = "GENERAL";
+    if (admissioType === 'quota-1') quotaType = "QUOTA_1";
+    if (admissioType === 'quota-2') quotaType = "QUOTA_2";
+
+    const response = await fetch(`http://localhost:8080/applications?offerId=${offerId}&quotaType=${quotaType}&isBudget=${admissioType !== "contract"}`);
+
+    if (!response.ok) {
+        console.error("Error loading applications: ", new Error(`HTTP error! Status: ${response.status}`));
+        return null;
+    }
+
+    return await response.json();
 }

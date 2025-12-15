@@ -37,8 +37,8 @@
     <div id="offer-popup-content" class="popup-content">
         <div id="offer-info">
             <h3>Інформація про пропозицію</h3>
-            <p id="popup-university">Університет: <span>Національний Університет "Києво-Могилянська Академія"</span>
-            </p>
+            <p id="popup-university">Університет: <span>Національний Університет "Києво-Могилянська Академія"</span></p>
+            <p id="popup-major">Спеціальність: <span>ІПЗ</span></p>
             <p id="popup-offer-name">Пропозиція: <span>Інженерія програмного забезпечення</span></p>
             <p id="popup-faculty">Факультет: <span>ФІ</span></p>
             <p id="popup-study-form">Форма навчання: <span>Денна</span></p>
@@ -48,22 +48,25 @@
         <table id="application-table" class="data-table">
             <thead>
             <tr>
+                <th></th>
                 <th>№</th>
                 <th>Студент</th>
                 <th>Прохідний бал</th>
                 <th>Пріорітет</th>
-                <th>Актуальна</th>
+                <th>Статус</th>
             </tr>
             </thead>
             <tbody>
             <tr id="studentId_1" onclick="document.getElementById('student-popup').style.display='block';">
+                <th>1</th>
                 <th>1</th>
                 <th>Іванов І. І.</th>
                 <th>300</th>
                 <th>1</th>
                 <th>так</th>
             </tr>
-            <tr >
+            <tr>
+                <th>2</th>
                 <th>2</th>
                 <th>Петренко П. П.</th>
                 <th>299</th>
@@ -72,6 +75,7 @@
             </tr>
             <tr class="not-actual">
                 <th>3</th>
+                <th></th>
                 <th>Петренко П. П.</th>
                 <th>299</th>
                 <th>2</th>
@@ -79,6 +83,7 @@
             </tr>
             <tr class="user-application">
                 <th>4</th>
+                <th>3</th>
                 <th>Ви</th>
                 <th>183.4</th>
                 <th>-</th>

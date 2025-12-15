@@ -81,9 +81,20 @@ export interface TrackedOffers{
     offerId: number;
     universityName: string;
     majorName: string;
+    offerName: string;
     facultyName: string;
+    educationForm: string;
     userScore: number;
     rankActual: number;
     rankAll: number;
     places: number;
+}
+
+export interface Application{
+    studentId: number;
+    studentName: string;
+    score: number;
+    priority: number;
+    isActual: boolean;
+    isCounted: boolean;
 }
