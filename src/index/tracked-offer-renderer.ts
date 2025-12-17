@@ -1,9 +1,11 @@
-import {TrackedOffers, Application, educationFormLabels} from "../common/types.js";
+import {TrackedOffers, Application, StudentApplication, educationFormLabels} from "../common/types.js";
 import {removeFromTrackedOffers} from "./tracking-handler.js";
-import {applicationType, getApplications} from "./tracked-offers.js";
+import {applicationType, getApplications, getStudentApplications} from "./tracked-offers.js";
 
 const popup = document.getElementById("offer-popup") as HTMLDivElement;
 const popupOverlay = document.getElementById("popup-overlay") as HTMLDivElement;
+
+const studentApplicationsPopup = document.getElementById("student-popup") as HTMLDivElement;
 
 export function renderTrackedOffer(offer: TrackedOffers): HTMLElement {
     const offerElement = document.createElement("div");
@@ -71,7 +73,7 @@ export function renderTrackedOffer(offer: TrackedOffers): HTMLElement {
 
     trackBtn.addEventListener("click", (event: Event): void => {
         event.stopPropagation();
-        toggleTrack(offer, event.currentTarget as HTMLButtonElement);
+        toggleTrack(offer);
     });
     offerElement.appendChild(trackBtn);
 
@@ -83,7 +85,7 @@ export function renderTrackedOffer(offer: TrackedOffers): HTMLElement {
     return offerElement;
 }
 
-function toggleTrack(offer: TrackedOffers, button: HTMLButtonElement): void {
+function toggleTrack(offer: TrackedOffers): void {
     if (!confirm("Ви впевнені, що хочете видалити цю пропозицію зі списку відстежуваних?"))
         return;
 
@@ -230,6 +232,11 @@ function renderApplication(count: number, application: Application, realCount: s
     status.innerHTML = statusHtml;
     row.appendChild(status);
 
+    row.addEventListener("click",  (event: Event): void => {
+        event.stopPropagation();
+        renderStudentFullInfo(application.studentId, application.studentName);
+    });
+
     return row;
 }
 
@@ -274,6 +281,101 @@ function renderUserApplication(count: number, realCount: number, userScore: numb
     const status = document.createElement("td");
     status.innerHTML = statusHtml;
     row.appendChild(status);
+
+    return row;
+}
+
+async function renderStudentFullInfo(studentId: number, studentName: string): Promise<void>{
+    const applications: StudentApplication[] | null = await getStudentApplications(studentId);
+
+    studentApplicationsPopup.style.display = "block";
+
+    const title = document.querySelector("#student-popup-title span") as HTMLSpanElement;
+    title.replaceChildren();
+    title.textContent = "писок заяв студента ";
+    const name = document.createElement("span");
+    name.textContent = studentName;
+    title.appendChild(name);
+    if (!applications) {
+        const someThingWrong = document.createElement("p");
+        someThingWrong.style.color = "red";
+        someThingWrong.textContent = "Помилка завантажування заяв, спробуйте пізніше!";
+        title.appendChild(someThingWrong);
+        return;
+    }
+
+    const applicationList = document.querySelector("#student-application-table tbody") as HTMLTableSectionElement;
+    applicationList.replaceChildren();
+
+    for (const application of applications) {
+        applicationList.appendChild(renderStudentApplication(application));
+    }
+}
+
+function renderStudentApplication(application: StudentApplication): HTMLTableRowElement{
+    const row = document.createElement("tr");
+
+    const priority = document.createElement("td");
+    priority.textContent = String(application.priority);
+    row.appendChild(priority);
+
+    const isActual = document.createElement("td");
+    isActual.classList.add("status-badge");
+    if (application.isCounted && application.isActual) {
+        row.classList.add("state-recommended");
+        isActual.classList.add("badge-success");
+        isActual.textContent = "✅ Рекомендовано";
+    }
+    else if (application.isCounted && !application.isActual) {
+        row.classList.add("state-blocked");
+        isActual.classList.add("badge-neutral");
+        isActual.textContent = "⚠️ Рекомендовано, але не має вищих пріорітетів";
+    }
+    else {
+        row.classList.add("state-rejected");
+        isActual.classList.add("badge-neutral");
+        isActual.textContent = "❌ Не проходить, або проходить за вищим пріорітетом";
+    }
+    row.appendChild(isActual);
+
+    const score = document.createElement("td");
+    score.textContent = String(application.score);
+    row.appendChild(score);
+
+    const type = document.createElement("td");
+    if (!application.isBudget){
+        type.textContent = "Контракт";
+    }
+    else{
+        switch (application.quotaType) {
+            case "QUOTA_1":
+                type.textContent = "Квота 1";
+                break;
+            case "QUOTA_2":
+                type.textContent = "Квота 2";
+                break;
+            case "GENERAL":
+                type.textContent = "Бюджет";
+                break;
+            default:
+                type.textContent = "Помилка";
+                type.style.color = "red";
+                break;
+        }
+    }
+    row.appendChild(type);
+
+    const university = document.createElement("td");
+    university.textContent = application.universityName;
+    row.appendChild(university);
+
+    const faculty = document.createElement("td");
+    faculty.textContent = application.facultyName;
+    row.appendChild(faculty);
+
+    const major = document.createElement("td");
+    major.textContent = application.majorName;
+    row.appendChild(major);
 
     return row;
 }

@@ -98,3 +98,15 @@ export interface Application{
     isActual: boolean;
     isCounted: boolean;
 }
+
+export interface StudentApplication{
+    priority: number;
+    isActual: boolean;
+    isCounted: boolean;
+    score: number;
+    quotaType: string;
+    isBudget: boolean;
+    universityName: string;
+    facultyName: string;
+    majorName: string;
+}

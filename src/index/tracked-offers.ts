@@ -1,4 +1,4 @@
-import {Application, TrackedOffers} from "../common/types.js";
+import {Application, StudentApplication, TrackedOffers} from "../common/types.js";
 import {renderTrackedOffer} from "./tracked-offer-renderer.js"
 
 const header = document.getElementById("header") as HTMLSpanElement;
@@ -112,6 +112,17 @@ export async function getApplications(offerId: number): Promise<Application[] | 
 
     if (!response.ok) {
         console.error("Error loading applications: ", new Error(`HTTP error! Status: ${response.status}`));
+        return null;
+    }
+
+    return await response.json();
+}
+
+export async function getStudentApplications(studentId: number): Promise<StudentApplication[] | null> {
+    const response = await fetch(`http://localhost:8080/applications/student?studentId=${studentId}`);
+
+    if (!response.ok) {
+        console.error("Error loading student applications: ", new Error(`HTTP error! Status: ${response.status}`));
         return null;
     }
 
