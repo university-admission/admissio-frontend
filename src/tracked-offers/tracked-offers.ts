@@ -1,5 +1,7 @@
 import {Application, StudentApplication, TrackedOffers} from "../common/types.js";
 import {renderTrackedOffer} from "./tracked-offer-renderer.js"
+import {get, post} from "../common/api-client.js";
+import {ENDPOINTS} from "../common/config.js";
 
 const header = document.getElementById("header") as HTMLSpanElement;
 export const applicationType = document.getElementById("application-type") as HTMLSpanElement;
@@ -7,9 +9,7 @@ export const applicationType = document.getElementById("application-type") as HT
 const offersList = document.getElementById("offers-list") as HTMLDivElement;
 const admissioType = localStorage.getItem("admission-type") || "budget";
 
-getTrackedOffers();
-
-function getTrackedOffers() : void {
+export async function getTrackedOffers() : Promise<void> {
     header.textContent = "Відстежуванні пропозиції: ";
     applicationType.textContent = "";
 
@@ -72,26 +72,14 @@ function getTrackedOffers() : void {
         "isBudget": admissioType !== "contract"
     };
 
-    fetch("http://localhost:8080/offers/tracked",{
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(requestData)
-    })
-    .then(response => {
-        if (!response.ok)
-            throw new Error(`HTTP error! Status: ${response.status}`);
-
-        return response.json();
-    })
-    .then((data: TrackedOffers[]) => {
-        renderTrackedOffers(data);
-    })
-    .catch((error: Error) => {
+    try {
+        const offers = await post<TrackedOffers[]>(ENDPOINTS.TRACKED_OFFERS, requestData);
+        renderTrackedOffers(offers);
+    }
+    catch (error) {
         console.error("Error loading tracked offers: ", error);
         offersList.innerHTML = `<p style="color: red; text-align: center;">Помилка завантаження даних. Спробуйте оновити сторінку.</p>`;
-    });
+    }
 }
 
 function renderTrackedOffers(offers: TrackedOffers[]): void {
@@ -108,23 +96,22 @@ export async function getApplications(offerId: number): Promise<Application[] | 
     if (admissioType === 'quota-1') quotaType = "QUOTA_1";
     if (admissioType === 'quota-2') quotaType = "QUOTA_2";
 
-    const response = await fetch(`http://localhost:8080/applications?offerId=${offerId}&quotaType=${quotaType}&isBudget=${admissioType !== "contract"}`);
-
-    if (!response.ok) {
-        console.error("Error loading applications: ", new Error(`HTTP error! Status: ${response.status}`));
+    try {
+        return await get<Application[]>(ENDPOINTS.APPLICATIONS + `?offerId=${offerId}&quotaType=${quotaType}&isBudget=${admissioType !== "contract"}`)
+    }
+    catch (error) {
+        console.error("Error loading applications for offer: ", error);
         return null;
     }
-
-    return await response.json();
 }
 
 export async function getStudentApplications(studentId: number): Promise<StudentApplication[] | null> {
-    const response = await fetch(`http://localhost:8080/applications/student?studentId=${studentId}`);
 
-    if (!response.ok) {
-        console.error("Error loading student applications: ", new Error(`HTTP error! Status: ${response.status}`));
+    try {
+        return await get<StudentApplication[]>(ENDPOINTS.STUDENT_APPLICATIONS + `?studentId=${studentId}`);
+    }
+    catch (error) {
+        console.error("Error loading student applications: ", error);
         return null;
     }
-
-    return await response.json();
 }

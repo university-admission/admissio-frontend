@@ -1,5 +1,7 @@
 import {educationFormLabels, Major, Offer, Region, University} from "../common/types.js";
 import {renderOffersResponses} from "./offer-renderer.js";
+import {get} from "../common/api-client.js";
+import {ENDPOINTS} from "../common/config.js";
 
 
 const regionInput = document.getElementById("region-field") as HTMLInputElement;
@@ -13,12 +15,12 @@ const majorList = document.getElementById("majors") as HTMLDataListElement;
 
 const searchButton = document.getElementById("search-button") as HTMLButtonElement;
 
-searchButton.addEventListener("click", (event) => {
+searchButton.addEventListener("click", async (event) => {
     event.preventDefault();
-    loadOffers();
+    await loadOffers();
 })
 
-regionInput.addEventListener("change", () => {
+regionInput.addEventListener("change", async () => {
     const selectedOption = Array.from(regionList.options).find(
         (option) => option.value === regionInput.value.trim()
     );
@@ -26,42 +28,40 @@ regionInput.addEventListener("change", () => {
     if (selectedOption) {
         universityInput.value = "";
         const regionName = selectedOption.value;
-        if (regionName) loadUniversities(regionName);
+        if (regionName) await loadUniversities(regionName);
     }
     else
-        loadUniversities();
+        await loadUniversities();
 });
 
-export function loadData(): void {
-    loadMajors();
-    loadRegions();
-    loadUniversities();
-    loadEducationForms();
+export async function loadData(): Promise<void> {
+    await loadMajors();
+    await loadRegions();
+    await loadUniversities();
+    await loadEducationForms();
 }
 
-function loadEducationForms(): void {
-    fetch("http://localhost:8080/offers/education-form")
-        .then(response => {
-            if (!response.ok)
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            return response.json();
-        })
-        .then((data: string[]) => {
-            educationFormInput.replaceChildren();
+async function loadEducationForms(): Promise<void> {
+    try {
+        const educationForms = await get<string[]>(ENDPOINTS.EDUCATION_FORM);
 
-            const optionAll = document.createElement("option");
-            optionAll.value = "All";
-            optionAll.textContent = "Усі";
-            educationFormInput.appendChild(optionAll);
+        educationFormInput.replaceChildren();
 
-            data.forEach(form => {
-                const option = document.createElement("option");
-                option.value = form;
-                option.textContent = educationFormLabels[form] || form;
-                educationFormInput.appendChild(option);
-            });
-        })
-        .catch((error: Error) => console.error("Error loading education forms:", error))
+        const optionAll = document.createElement("option");
+        optionAll.value = "All";
+        optionAll.textContent = "Усі";
+        educationFormInput.appendChild(optionAll);
+
+        educationForms.forEach(form => {
+            const option = document.createElement("option");
+            option.value = form;
+            option.textContent = educationFormLabels[form] || form;
+            educationFormInput.appendChild(option);
+        });
+    }
+    catch (error) {
+        console.error("Error loading education forms:", error);
+    }
 }
 
 function getSelectedId(
@@ -72,7 +72,7 @@ function getSelectedId(
     return option?.dataset.id ? Number(option.dataset.id) : null;
 }
 
-function loadOffers(): void {
+async function loadOffers(): Promise<void> {
     const majorId = getSelectedId(majorList.options, majorInput);
     const regionId = getSelectedId(regionList.options, regionInput);
     const universityId = getSelectedId(universityList.options, universityInput);
@@ -85,73 +85,60 @@ function loadOffers(): void {
     if (universityId) params.append("universityId", String(universityId));
     if (educationForm) params.append("educationForm", educationForm);
 
-    fetch(`http://localhost:8080/offers/filter?${params.toString()}`)
-        .then(response => {
-            if (!response.ok)
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            return response.json();
-        })
-        .then((data: any[]) => {
-            const offers: Offer[] = data;
-            renderOffersResponses(offers);
-        })
-        .catch((error: Error) => console.error("Error loading Offers:", error))
+    try {
+        const offers = await get<Offer[]>(ENDPOINTS.FILTERED_OFFERS + `?${params.toString()}`);
+        renderOffersResponses(offers);
+    }
+    catch (error) {
+        console.error("Error loading Offers:", error);
+    }
 }
 
-function loadMajors(): void {
-    fetch('http://localhost:8080/majors')
-        .then(response => {
-            if (!response.ok)
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            return response.json();
-        })
-    .then((data: Major[]) => {
+async function loadMajors(): Promise<void> {
+    try {
+        const majors = await get<Major[]>(ENDPOINTS.MAJORS);
         majorList.replaceChildren();
-        data.forEach(major =>{
+        majors.forEach(major =>{
             const option = document.createElement("option");
             option.value = major.majorCode;
             option.textContent = major.majorName;
             option.dataset.id = String(major.id);
             majorList.appendChild(option);
         });
-    })
-    .catch((error: Error) => console.error("Error loading majors:", error))
+    }
+    catch (error) {
+        console.error("Error loading majors:", error);
+    }
 }
 
-function loadRegions(): void {
-    fetch('http://localhost:8080/regions')
-        .then(response => {
-            if (!response.ok)
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            return response.json();
-        })
-        .then((data: Region[]) => {
-            regionList.replaceChildren();
-            data.forEach(region => {
-                const option = document.createElement("option");
-                option.value = region.region;
-                option.dataset.id = String(region.id);
-                regionList.appendChild(option);
-            });
-        })
-        .catch((error: Error) => console.error("Error loading regions:", error));
+async function loadRegions(): Promise<void> {
+    try {
+        const regions = await get<Region[]>(ENDPOINTS.REGIONS);
+        regionList.replaceChildren();
+        regions.forEach(region => {
+            const option = document.createElement("option");
+            option.value = region.region;
+            option.dataset.id = String(region.id);
+            regionList.appendChild(option);
+        });
+    }
+    catch (error) {
+        console.error("Error loading regions:", error);
+    }
 }
 
-function loadUniversities(regionId: string = ""): void {
-    fetch(`http://localhost:8080/universities?city=${regionId}`)
-        .then(response => {
-            if (!response.ok)
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            return response.json();
-        })
-        .then((data: University[]) => {
-            universityList.replaceChildren();
-            data.forEach(university => {
-                const option = document.createElement("option");
-                option.value = university.universityName;
-                option.dataset.id = String(university.id);
-                universityList.appendChild(option);
-            });
-        })
-        .catch((error: Error ) => console.error("Error loading universities:", error));
+async function loadUniversities(regionId: string = ""): Promise<void> {
+    try {
+        const universities = await get<University[]>(ENDPOINTS.UNIVERSITIES + "?" + regionId);
+        universityList.replaceChildren();
+        universities.forEach(university => {
+            const option = document.createElement("option");
+            option.value = university.universityName;
+            option.dataset.id = String(university.id);
+            universityList.appendChild(option);
+        });
+    }
+    catch (error) {
+        console.error("Error loading universities:", error);
+    }
 }

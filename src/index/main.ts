@@ -3,4 +3,4 @@ import {loadData} from "./search-handler.js";
 
 loadStudentScore();
 
-loadData();
+void loadData();

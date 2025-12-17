@@ -1,5 +1,5 @@
 import {TrackedOffers, Application, StudentApplication, educationFormLabels} from "../common/types.js";
-import {removeFromTrackedOffers} from "./tracking-handler.js";
+import {removeFromTrackedOffers} from "../index/tracking-handler.js";
 import {applicationType, getApplications, getStudentApplications} from "./tracked-offers.js";
 
 const popup = document.getElementById("offer-popup") as HTMLDivElement;
@@ -77,9 +77,9 @@ export function renderTrackedOffer(offer: TrackedOffers): HTMLElement {
     });
     offerElement.appendChild(trackBtn);
 
-    offerElement.addEventListener("click", (event: Event): void => {
+    offerElement.addEventListener("click", async (event: Event): Promise<void> => {
         event.stopPropagation();
-        renderFullInfo(offer);
+        await renderFullInfo(offer);
     })
 
     return offerElement;
@@ -232,9 +232,9 @@ function renderApplication(count: number, application: Application, realCount: s
     status.innerHTML = statusHtml;
     row.appendChild(status);
 
-    row.addEventListener("click",  (event: Event): void => {
+    row.addEventListener("click", async (event: Event): Promise<void> => {
         event.stopPropagation();
-        renderStudentFullInfo(application.studentId, application.studentName);
+        await renderStudentFullInfo(application.studentId, application.studentName);
     });
 
     return row;
