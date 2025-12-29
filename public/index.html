@@ -46,7 +46,7 @@
 
             <label for="admission-type">Тип вступу:</label>
             <select id="admission-type">
-                <option value="budget">Бюджет</option>
+                <option value="general">Бюджет</option>
                 <option value="quota-1">Квота 1</option>
                 <option value="quota-2">Квота 2</option>
                 <option value="contract">Контракт</option>
@@ -121,28 +121,28 @@
                 </thead>
                 <tbody>
                 <tr id="budget-row">
-                    <td>Бюджет</td>
-                    <td class="text-right">60</td>
-                    <td class="text-right">250</td>
-                    <td class="text-right">151</td>
+                    <td data-label="Тип заявки">Бюджет</td>
+                    <td data-label="Всього місць" class="text-right">60</td>
+                    <td data-label="Подані заявки" class="text-right">250</td>
+                    <td data-label="Мін. бал" class="text-right">151</td>
                 </tr>
                 <tr id="quota1-row">
-                    <td>Квота 1</td>
-                    <td class="text-right">6</td>
-                    <td class="text-right">25</td>
-                    <td class="text-right">121</td>
+                    <td data-label="Тип заявки">Квота 1</td>
+                    <td data-label="Всього місць" class="text-right">6</td>
+                    <td data-label="Подані заявки" class="text-right">25</td>
+                    <td data-label="Мін. бал" class="text-right">121</td>
                 </tr>
                 <tr id="quota2-row">
-                    <td>Квота 2</td>
-                    <td class="text-right">6</td>
-                    <td class="text-right">25</td>
-                    <td class="text-right">121</td>
+                    <td data-label="Тип заявки">Квота 2</td>
+                    <td data-label="Всього місць" class="text-right">6</td>
+                    <td data-label="Подані заявки" class="text-right">25</td>
+                    <td data-label="Мін. бал" class="text-right">121</td>
                 </tr>
                 <tr id="contract-row">
-                    <td>Контракт</td>
-                    <td class="text-right">200</td>
-                    <td class="text-right">650</td>
-                    <td class="text-right">151</td>
+                    <td data-label="Тип заявки">Контракт</td>
+                    <td data-label="Всього місць" class="text-right">200</td>
+                    <td data-label="Подані заявки" class="text-right">650</td>
+                    <td data-label="Мін. бал" class="text-right">151</td>
                 </tr>
                 </tbody>
             </table>
@@ -163,54 +163,54 @@
                 </thead>
                 <tbody>
                 <tr id="math-row">
-                    <td>Математика</td>
-                    <td class="text-right">0.3</td>
-                    <td class="text-right">120</td>
+                    <td data-label="Предмет">Математика</td>
+                    <td data-label="Коефіцієнт" class="text-right">0.3</td>
+                    <td data-label="Мін. бал" class="text-right">120</td>
                 </tr>
                 <tr id="uk-lang-row">
-                    <td>Укр. мова</td>
-                    <td class="text-right">0.3</td>
-                    <td class="text-right">120</td>
+                    <td data-label="Предмет">Укр. мова</td>
+                    <td data-label="Коефіцієнт" class="text-right">0.3</td>
+                    <td data-label="Мін. бал" class="text-right">120</td>
                 </tr>
                 <tr id="history-row">
-                    <td>Історія</td>
-                    <td class="text-right">0.3</td>
-                    <td class="text-right">120</td>
+                    <td data-label="Предмет">Історія</td>
+                    <td data-label="Коефіцієнт" class="text-right">0.3</td>
+                    <td data-label="Мін. бал" class="text-right">120</td>
                 </tr>
                 <tr id="uk-lit-row">
-                    <td>Укр. літ.</td>
-                    <td class="text-right">0.3</td>
-                    <td class="text-right">120</td>
+                    <td data-label="Предмет">Укр. літ.</td>
+                    <td data-label="Коефіцієнт" class="text-right">0.3</td>
+                    <td data-label="Мін. бал" class="text-right">120</td>
                 </tr>
                 <tr id="foreign-lang-row">
-                    <td>Іноземна мова</td>
-                    <td class="text-right">0.3</td>
-                    <td class="text-right">120</td>
+                    <td data-label="Предмет">Іноземна мова</td>
+                    <td data-label="Коефіцієнт" class="text-right">0.3</td>
+                    <td data-label="Мін. бал" class="text-right">120</td>
                 </tr>
                 <tr id="biology-row">
-                    <td>Біологія</td>
-                    <td class="text-right">0.3</td>
-                    <td class="text-right">120</td>
+                    <td data-label="Предмет">Біологія</td>
+                    <td data-label="Коефіцієнт" class="text-right">0.3</td>
+                    <td data-label="Мін. бал" class="text-right">120</td>
                 </tr>
                 <tr id="geography-row">
-                    <td>Географія</td>
-                    <td class="text-right">0.3</td>
-                    <td class="text-right">120</td>
+                    <td data-label="Предмет">Географія</td>
+                    <td data-label="Коефіцієнт" class="text-right">0.3</td>
+                    <td data-label="Мін. бал" class="text-right">120</td>
                 </tr>
                 <tr id="physics-row">
-                    <td>Фізика</td>
-                    <td class="text-right">0.3</td>
-                    <td class="text-right">120</td>
+                    <td data-label="Предмет">Фізика</td>
+                    <td data-label="Коефіцієнт" class="text-right">0.3</td>
+                    <td data-label="Мін. бал" class="text-right">120</td>
                 </tr>
                 <tr id="chemistry-row">
-                    <td>Хімія</td>
-                    <td class="text-right">0.3</td>
-                    <td class="text-right">120</td>
+                    <td data-label="Предмет">Хімія</td>
+                    <td data-label="Коефіцієнт" class="text-right">0.3</td>
+                    <td data-label="Мін. бал" class="text-right">120</td>
                 </tr>
                 <tr id="competition-row">
-                    <td>Творчий конкурс</td>
-                    <td class="text-right">0.3</td>
-                    <td class="text-right">120</td>
+                    <td data-label="Предмет">Творчий конкурс</td>
+                    <td data-label="Коефіцієнт" class="text-right">0.3</td>
+                    <td data-label="Мін. бал" class="text-right">120</td>
                 </tr>
                 </tbody>
             </table>
@@ -222,5 +222,5 @@
     <span id="toast-message">Оцінки збережено!</span>
 </div>
 </body>
-<script type="module" src="./js/index/main.js"></script>
+<script type="module" src="./js/common/main.js"></script>
 </html>

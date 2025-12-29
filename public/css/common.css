@@ -1,13 +1,18 @@
 :root {
+    /* Основні кольори */
     --primary-color: #2C3E50;
     --secondary-color: #2980B9;
     --bg-light: #ECF0F1;
     --text-color: #333;
     --card-bg: #FFFFFF;
+
+    /* Кнопки */
     --button-hover: #1F618D;
     --button-tracked: #359a4c;
     --button-tracked-hover: #2a7b3d;
+    --close-icon-color: #888;
 
+    /* Статуси (Місця) */
     --save-bg: #e9f7ec;
     --save-text: #28a745;
     --dangerous-bg: #fff8e1;
@@ -16,6 +21,42 @@
     --impassable-text: #dc3545;
     --user-highlight-bg: #eaf3f9;
 
+    /* Таблиці та стани рядків */
+    --table-border: #e9ecef;
+    --table-header-bg: #f8f9fa;
+    --table-row-hover: #e9ecef;
+
+    /* Hover стани для таблиці (Specific) */
+    --state-rec-hover: #d4edda;
+    --state-blocked-bg: #fff3cd;
+    --state-blocked-hover: #ffeeba;
+    --state-rejected-bg: #f2f2f2;
+    --state-rejected-hover: #e2e6ea;
+    --state-canceld-hover: #f8d7da;
+
+    /* Бейджі */
+    --badge-success-text: #155724;
+    --badge-success-bg: #d4edda;
+
+    --badge-warning-text: #856404;
+    --badge-warning-bg: #fff3cd;
+    --badge-warning-border: #ffeeba;
+
+    --badge-neutral-text: #383d41;
+    --badge-neutral-bg: #e2e3e5;
+
+    --badge-danger-color: #721c24;
+    --badge-danger-bg: #f8d7da;
+    --badge-danger-border: #f5c6cb;
+
+    /* Бордери та тіні */
+    --border-color: #ddd;
+    --border-light: #eee;
+    --shadow-sm: rgba(0,0,0,0.1);
+    --shadow-md: rgba(0,0,0,0.3);
+    --overlay-color: rgba(0,0,0,.6);
+
+    /* Розміри */
     --border-radius: 8px;
     --spacing: 16px;
     --max-width: 1200px;
@@ -128,6 +169,13 @@ section h2 {
     background: var(--button-hover);
 }
 
+button.tracked{
+    background: var(--button-tracked);
+}
+
+button.tracked:hover {
+    background: var(--button-tracked-hover);
+}
 
 .popup-overlay {
     position: fixed;

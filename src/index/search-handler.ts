@@ -1,78 +1,99 @@
-import {educationFormLabels, Major, mapOffer, Offer, Region, University} from "../common/types.js";
+import {educationFormLabels, Major, Offer, Region, University} from "../common/types.js";
 import {renderOffersResponses} from "./offer-renderer.js";
+import {get} from "../common/api-client.js";
+import {ENDPOINTS} from "../common/config.js";
 
+export function initSearchPage(): void {
+    const regionInput = document.getElementById("region-field") as HTMLInputElement;
+    const universityInput = document.getElementById("university-field") as HTMLInputElement;
 
-const regionInput = document.getElementById("region-field") as HTMLInputElement;
-const universityInput = document.getElementById("university-field") as HTMLInputElement;
-const majorInput = document.getElementById("major-field") as HTMLInputElement;
-const educationFormInput = document.getElementById("education-form") as HTMLSelectElement;
+    const regionList = document.getElementById("regions") as HTMLDataListElement;
 
-const regionList = document.getElementById("regions") as HTMLDataListElement;
-const universityList = document.getElementById("universities") as HTMLDataListElement;
-const majorList = document.getElementById("majors") as HTMLDataListElement;
+    const searchButton = document.getElementById("search-button") as HTMLButtonElement;
 
-const searchButton = document.getElementById("search-button") as HTMLButtonElement;
+    searchButton.addEventListener("click", async (event) => {
+        event.preventDefault();
+        await loadOffers();
+    })
 
-searchButton.addEventListener("click", (event) => {
-    event.preventDefault();
-    loadOffers();
-})
+    regionInput.addEventListener("change", async () => {
+        const selectedOption = Array.from(regionList.options).find(
+            (option) => option.value === regionInput.value.trim()
+        );
 
-regionInput.addEventListener("change", () => {
-    const selectedOption = Array.from(regionList.options).find(
-        (option) => option.value === regionInput.value.trim()
-    );
+        if (selectedOption) {
+            universityInput.value = "";
+            const regionName = selectedOption.value;
+            if (regionName) await loadUniversities(regionName);
+        }
+        else
+            await loadUniversities();
+    });
 
-    if (selectedOption) {
-        universityInput.value = "";
-        const regionName = selectedOption.value;
-        if (regionName) loadUniversities(regionName);
+    void loadData();
+}
+
+async function loadData(): Promise<void> {
+    await loadMajors();
+    await loadRegions();
+    await loadUniversities();
+    await loadEducationForms();
+}
+
+async function loadEducationForms(): Promise<void> {
+    const educationFormInput = document.getElementById("education-form") as HTMLSelectElement;
+    if (!educationFormInput) {
+        console.error("Missing education form input!");
+        return;
     }
-    else
-        loadUniversities();
-});
 
-export function loadData(): void {
-    loadMajors();
-    loadRegions();
-    loadUniversities();
-    loadEducationForms();
+    try {
+        const educationForms = await get<string[]>(ENDPOINTS.EDUCATION_FORM);
+
+        educationFormInput.replaceChildren();
+
+        const optionAll = document.createElement("option");
+        optionAll.value = "All";
+        optionAll.textContent = "Усі";
+        educationFormInput.appendChild(optionAll);
+
+        educationForms.forEach(form => {
+            const option = document.createElement("option");
+            option.value = form;
+            option.textContent = educationFormLabels[form] || form;
+            educationFormInput.appendChild(option);
+        });
+    }
+    catch (error) {
+        console.error("Error loading education forms:", error);
+    }
 }
 
-function loadEducationForms(): void {
-    fetch("http://localhost:8080/offers/education-form")
-        .then(response => {
-            if (!response.ok)
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            return response.json();
-        })
-        .then((data: string[]) => {
-            educationFormInput.replaceChildren();
-
-            const optionAll = document.createElement("option");
-            optionAll.value = "All";
-            optionAll.textContent = "Усі";
-            educationFormInput.appendChild(optionAll);
-
-            data.forEach(form => {
-                const option = document.createElement("option");
-                option.value = form;
-                option.textContent = educationFormLabels[form] || form;
-                educationFormInput.appendChild(option);
-            });
-        })
-        .catch((error: Error) => console.error("Error loading education forms:", error))
-}
-
-function getSelectedId(
-    options: ArrayLike<HTMLOptionElement>,
-    input: HTMLInputElement
-): number | null {
+function getSelectedId(options: ArrayLike<HTMLOptionElement>, input: HTMLInputElement): number | null {
     const option = Array.from(options).find(o => o.value === input.value.trim());
     return option?.dataset.id ? Number(option.dataset.id) : null;
 }
 
-function loadOffers(): void {
+async function loadOffers(): Promise<void> {
+    const regionInput = document.getElementById("region-field") as HTMLInputElement;
+    const universityInput = document.getElementById("university-field") as HTMLInputElement;
+    const majorInput = document.getElementById("major-field") as HTMLInputElement;
+
+    const regionList = document.getElementById("regions") as HTMLDataListElement;
+    const universityList = document.getElementById("universities") as HTMLDataListElement;
+    const majorList = document.getElementById("majors") as HTMLDataListElement;
+    const educationFormInput = document.getElementById("education-form") as HTMLSelectElement;
+
+    if (!regionInput || !universityInput || !majorInput) {
+        console.error("Missing data input!");
+        return;
+    }
+
+    if (!regionList || !universityList || !majorList || !educationFormInput) {
+        console.error("Missing data sets!");
+        return;
+    }
+
     const majorId = getSelectedId(majorList.options, majorInput);
     const regionId = getSelectedId(regionList.options, regionInput);
     const universityId = getSelectedId(universityList.options, universityInput);
@@ -85,73 +106,78 @@ function loadOffers(): void {
     if (universityId) params.append("universityId", String(universityId));
     if (educationForm) params.append("educationForm", educationForm);
 
-    fetch(`http://localhost:8080/offers/filter?${params.toString()}`)
-        .then(response => {
-            if (!response.ok)
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            return response.json();
-        })
-        .then((data: any[]) => {
-            const offers: Offer[] = data.map(mapOffer);
-            renderOffersResponses(offers);
-        })
-        .catch((error: Error) => console.error("Error loading Offers:", error))
+    try {
+        const offers = await get<Offer[]>(ENDPOINTS.FILTERED_OFFERS + `?${params.toString()}`);
+        renderOffersResponses(offers);
+    }
+    catch (error) {
+        console.error("Error loading Offers:", error);
+    }
 }
 
-function loadMajors(): void {
-    fetch('http://localhost:8080/majors')
-        .then(response => {
-            if (!response.ok)
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            return response.json();
-        })
-    .then((data: Major[]) => {
+async function loadMajors(): Promise<void> {
+    const majorList = document.getElementById("majors") as HTMLDataListElement;
+    if(!majorList){
+        console.error("Missing major set!");
+        return;
+    }
+
+    try {
+        const majors = await get<Major[]>(ENDPOINTS.MAJORS);
         majorList.replaceChildren();
-        data.forEach(major =>{
+        majors.forEach(major =>{
             const option = document.createElement("option");
             option.value = major.majorCode;
             option.textContent = major.majorName;
             option.dataset.id = String(major.id);
             majorList.appendChild(option);
         });
-    })
-    .catch((error: Error) => console.error("Error loading majors:", error))
+    }
+    catch (error) {
+        console.error("Error loading majors:", error);
+    }
 }
 
-function loadRegions(): void {
-    fetch('http://localhost:8080/regions')
-        .then(response => {
-            if (!response.ok)
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            return response.json();
-        })
-        .then((data: Region[]) => {
-            regionList.replaceChildren();
-            data.forEach(region => {
-                const option = document.createElement("option");
-                option.value = region.region;
-                option.dataset.id = String(region.id);
-                regionList.appendChild(option);
-            });
-        })
-        .catch((error: Error) => console.error("Error loading regions:", error));
+async function loadRegions(): Promise<void> {
+    const regionList = document.getElementById("regions") as HTMLDataListElement;
+    if (!regionList) {
+        console.error("Missing region set!");
+        return;
+    }
+
+    try {
+        const regions = await get<Region[]>(ENDPOINTS.REGIONS);
+        regionList.replaceChildren();
+        regions.forEach(region => {
+            const option = document.createElement("option");
+            option.value = region.region;
+            option.dataset.id = String(region.id);
+            regionList.appendChild(option);
+        });
+    }
+    catch (error) {
+        console.error("Error loading regions:", error);
+    }
 }
 
-function loadUniversities(regionId: string = ""): void {
-    fetch(`http://localhost:8080/universities?city=${regionId}`)
-        .then(response => {
-            if (!response.ok)
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            return response.json();
-        })
-        .then((data: University[]) => {
-            universityList.replaceChildren();
-            data.forEach(university => {
-                const option = document.createElement("option");
-                option.value = university.universityName;
-                option.dataset.id = String(university.id);
-                universityList.appendChild(option);
-            });
-        })
-        .catch((error: Error ) => console.error("Error loading universities:", error));
+async function loadUniversities(regionId: string = ""): Promise<void> {
+    const universityList = document.getElementById("universities") as HTMLDataListElement;
+    if (!universityList) {
+        console.error("Missing university set!");
+        return;
+    }
+
+    try {
+        const universities = await get<University[]>(ENDPOINTS.UNIVERSITIES + "?" + regionId);
+        universityList.replaceChildren();
+        universities.forEach(university => {
+            const option = document.createElement("option");
+            option.value = university.universityName;
+            option.dataset.id = String(university.id);
+            universityList.appendChild(option);
+        });
+    }
+    catch (error) {
+        console.error("Error loading universities:", error);
+    }
 }

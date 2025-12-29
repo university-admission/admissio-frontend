@@ -60,10 +60,163 @@ main > h2 {
     border-left: 3px solid var(--secondary-color);
 }
 
-.data-table tr.not-actual {
-    opacity: .6;
+.data-table tr.state-recommended,
+.data-table tr.state-recommended:nth-child(even) {
+    background-color: var(--save-bg);
+    border-left: 5px solid var(--save-text);
 }
 
-.data-table tr.not-actual:hover {
+.data-table tr.state-blocked {
+    background-color: var(--state-blocked-bg);
+    border-left: 5px solid var(--dangerous-text);
+}
+
+.data-table tr.state-rejected {
+    opacity: 0.6;
+    background-color: var(--state-rejected-bg);
+}
+
+.data-table tr.state-canceled,
+.data-table tr.state-canceled:nth-child(even){
+    background-color: var(--impassable-bg);
+    border-left: 5px solid var(--impassable-text);
+}
+
+.data-table tr.state-recommended:hover {
+    background-color: var(--state-rec-hover);
+    cursor: pointer;
+}
+
+.data-table tr.state-blocked:hover {
+    background-color: var(--state-blocked-hover);
+    cursor: pointer;
+}
+
+.data-table tr.state-rejected:hover {
+    background-color: var(--state-rejected-hover);
     opacity: 1;
+    cursor: pointer;
+}
+
+.data-table tr.state-canceled:hover {
+    background-color: var(--state-canceld-hover);
+    cursor: pointer;
+}
+
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.badge-success {
+    color: var(--badge-success-text);
+    background-color: var(--badge-success-bg);
+}
+
+.badge-warning {
+    color: var(--badge-warning-text);
+    background-color: var(--badge-warning-bg);
+    border: 1px solid var(--badge-warning-border);
+}
+
+.badge-neutral {
+    color: var(--badge-neutral-text);
+    background-color: var(--badge-neutral-bg);
+}
+
+.badge-danger {
+    color: var(--badge-danger-color);
+    background-color: var(--badge-danger-bg);
+    border: 1px solid var(--badge-danger-border);
+}
+
+.loader {
+    border: 4px solid var(--save-bg);
+    border-top: 4px solid var(--secondary-color);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    display: block;
+}
+
+.loader-container {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+    width: 100%;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loader-text {
+    text-align: center;
+    color: var(--text-color);
+    margin-top: 15px;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+/* --- MOBILE RESPONSIVENESS --- */
+@media (max-width: 768px) {
+    .popup {
+        width: 95%;
+        max-height: 95vh;
+        padding: 16px;
+    }
+
+    .popup-content {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .data-table {
+        border: 0;
+    }
+
+    .data-table thead {
+        display: none;
+    }
+
+    .data-table tr {
+        display: block;
+        margin-bottom: 16px;
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        background: #fff;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .data-table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #eee;
+        font-size: 0.95rem;
+        padding: 12px;
+        text-align: right;
+    }
+
+    .data-table td:last-child {
+        border-bottom: 0;
+    }
+
+    .data-table td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: var(--primary-color);
+        text-align: left;
+        margin-right: 15px;
+        flex: 1;
+    }
 }

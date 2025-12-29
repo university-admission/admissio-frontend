@@ -34,14 +34,6 @@ input[list] {
     gap: 10px;
 }
 
-button.tracked{
-    background: var(--button-tracked);
-}
-
-button.tracked:hover {
-    background: var(--button-tracked-hover);
-}
-
 form > button.form-full-width {
     grid-column: 1 / -1;
     margin-top: var(--spacing);
@@ -130,4 +122,98 @@ button:hover {
 
 .toast.hidden {
     display: none;
+}
+
+/* --- MOBILE RESPONSIVENESS --- */
+@media (max-width: 768px) {
+
+    h2 {
+        text-align: center;
+    }
+
+    .popup {
+        width: 95%;
+        max-height: 95vh;
+        padding: 16px;
+    }
+
+    .popup-content {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .data-table {
+        border: 0;
+    }
+
+    .data-table thead {
+        display: none;
+    }
+
+    .data-table tr {
+        display: block;
+        margin-bottom: 16px;
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        background: #fff;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .data-table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #eee;
+        font-size: 0.95rem;
+        padding: 12px;
+        text-align: right;
+    }
+
+    .data-table td:last-child {
+        border-bottom: 0;
+    }
+
+    .data-table td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: var(--primary-color);
+        text-align: left;
+        margin-right: 15px;
+        flex: 1;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+
+    form label {
+        text-align: left;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        font-size: 0.9rem;
+        color: var(--primary-color);
+    }
+
+    input[type="number"],
+    select,
+    input[list] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 16px;
+    }
+
+    .elective-group {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 10px;
+        margin-bottom: 16px;
+        width: 100%;
+    }
+
+    .form-full-width{
+        width: 100%;
+    }
 }
