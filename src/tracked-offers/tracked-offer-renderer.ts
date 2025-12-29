@@ -211,28 +211,15 @@ function renderApplication(count: number, application: Application, realCount: s
         statusHtml = '<span class="status-badge badge-neutral">Проходить за вищим пріоритетом, або не проходить</span>';
     }
 
-    const index = document.createElement("td");
-    index.textContent = String(count);
-    row.appendChild(index);
-
-    const realIndex = document.createElement("td");
-    realIndex.textContent = realCount;
-    row.appendChild(realIndex);
-
-    const name = document.createElement("td");
-    name.textContent = application.studentName;
-    row.appendChild(name);
-
-    const score = document.createElement("td");
-    score.textContent = String(application.score.toFixed(3));
-    row.appendChild(score);
-
-    const priority = document.createElement("td");
-    priority.textContent = String(application.priority);
-    row.appendChild(priority);
+    row.appendChild(createCell(String(count), "№"));
+    row.appendChild(createCell(realCount, "Реальний №"));
+    row.appendChild(createCell(application.studentName, "Студент"));
+    row.appendChild(createCell(String(application.score.toFixed(3)), "Бал"));
+    row.appendChild(createCell(String(application.priority), "Пріоритет"));
 
     const status = document.createElement("td");
     status.innerHTML = statusHtml;
+    status.setAttribute("data-label", "Статус");
     row.appendChild(status);
 
     row.addEventListener("click", async (event: Event): Promise<void> => {
@@ -241,6 +228,13 @@ function renderApplication(count: number, application: Application, realCount: s
     });
 
     return row;
+}
+
+function createCell(text: string, label: string): HTMLTableCellElement{
+    const cell = document.createElement("td");
+    cell.textContent = text;
+    cell.setAttribute("data-label", label);
+    return cell;
 }
 
 function renderUserApplication(count: number, realCount: number, userScore: number, placeAfterUser: number): HTMLTableRowElement {
@@ -261,28 +255,15 @@ function renderUserApplication(count: number, realCount: number, userScore: numb
         statusHtml = '<span class="status-badge badge-danger">❌ Не проходите</span>';
     }
 
-    const index = document.createElement("td");
-    index.textContent = String(count);
-    row.appendChild(index);
-
-    const realIndex = document.createElement("td");
-    realIndex.textContent = String(realCount);
-    row.appendChild(realIndex);
-
-    const name = document.createElement("td");
-    name.textContent = "Ви";
-    row.appendChild(name);
-
-    const score = document.createElement("td");
-    score.textContent = String(userScore.toFixed(3));
-    row.appendChild(score);
-
-    const priority = document.createElement("td");
-    priority.textContent = "-";
-    row.appendChild(priority);
+    row.appendChild(createCell(String(count), "№"));
+    row.appendChild(createCell(String(realCount), "Реальний №"));
+    row.appendChild(createCell("Ви", "Студент"));
+    row.appendChild(createCell(String(userScore.toFixed(3)), "Бал"));
+    row.appendChild(createCell("-", "Пріоритет"));
 
     const status = document.createElement("td");
     status.innerHTML = statusHtml;
+    status.setAttribute("data-label", "Статус");
     row.appendChild(status);
 
     return row;
@@ -324,12 +305,11 @@ async function renderStudentFullInfo(studentId: number, studentName: string): Pr
 function renderStudentApplication(application: StudentApplication): HTMLTableRowElement{
     const row = document.createElement("tr");
 
-    const priority = document.createElement("td");
-    priority.textContent = String(application.priority);
-    row.appendChild(priority);
+    row.appendChild(createCell(String(application.priority), "Пріорітет"));
 
     const isActual = document.createElement("td");
     isActual.classList.add("status-badge");
+    isActual.setAttribute("data-label", "Актуальна")
     if (application.isCounted && application.isActual) {
         row.classList.add("state-recommended");
         isActual.classList.add("badge-success");
@@ -349,7 +329,7 @@ function renderStudentApplication(application: StudentApplication): HTMLTableRow
 
     const score = document.createElement("td");
     score.textContent = String(application.score);
-    row.appendChild(score);
+    row.appendChild(createCell(String(application.score), "Бал"));
 
     const type = document.createElement("td");
     if (!application.isBudget){
@@ -372,19 +352,13 @@ function renderStudentApplication(application: StudentApplication): HTMLTableRow
                 break;
         }
     }
+    type.setAttribute("data-label", "Тип");
     row.appendChild(type);
 
-    const university = document.createElement("td");
-    university.textContent = application.universityName;
-    row.appendChild(university);
 
-    const faculty = document.createElement("td");
-    faculty.textContent = application.facultyName;
-    row.appendChild(faculty);
-
-    const major = document.createElement("td");
-    major.textContent = application.majorName;
-    row.appendChild(major);
+    row.appendChild(createCell(application.universityName, "Університет"));
+    row.appendChild(createCell(application.facultyName, "Факультет"));
+    row.appendChild(createCell(application.majorName, "Спеціальність"));
 
     return row;
 }
