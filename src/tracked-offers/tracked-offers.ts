@@ -2,14 +2,25 @@ import {Application, StudentApplication, TrackedOffers} from "../common/types.js
 import {renderTrackedOffer} from "./tracked-offer-renderer.js"
 import {get, post} from "../common/api-client.js";
 import {ENDPOINTS} from "../common/config.js";
+import {STORAGE_KEYS, StorageService} from "../common/student-score-handler.js";
 
-const header = document.getElementById("header") as HTMLSpanElement;
-export const applicationType = document.getElementById("application-type") as HTMLSpanElement;
+export let applicationType: HTMLSpanElement;
 
-const offersList = document.getElementById("offers-list") as HTMLDivElement;
-const admissioType = localStorage.getItem("admission-type") || "budget";
+let offersList: HTMLDivElement;
+let admissioType: string;
 
-export async function getTrackedOffers() : Promise<void> {
+export function initTrackedOffersPage():void {
+    applicationType = document.getElementById("application-type") as HTMLSpanElement;
+
+    offersList = document.getElementById("offers-list") as HTMLDivElement;
+    admissioType = StorageService.getString(STORAGE_KEYS.ADMISSION_TYPE) || "budget";
+
+    void getTrackedOffers();
+}
+
+async function getTrackedOffers() : Promise<void> {
+    const header = document.getElementById("header") as HTMLSpanElement;
+
     header.textContent = "Відстежуванні пропозиції: ";
     applicationType.textContent = "";
 

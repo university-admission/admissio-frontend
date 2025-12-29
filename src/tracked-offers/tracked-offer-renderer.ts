@@ -1,11 +1,6 @@
 import {TrackedOffers, Application, StudentApplication, educationFormLabels} from "../common/types.js";
-import {removeFromTrackedOffers} from "../index/tracking-handler.js";
+import {StorageService} from "../common/student-score-handler.js";
 import {applicationType, getApplications, getStudentApplications} from "./tracked-offers.js";
-
-const popup = document.getElementById("offer-popup") as HTMLDivElement;
-const popupOverlay = document.getElementById("popup-overlay") as HTMLDivElement;
-
-const studentApplicationsPopup = document.getElementById("student-popup") as HTMLDivElement;
 
 export function renderTrackedOffer(offer: TrackedOffers): HTMLElement {
     const offerElement = document.createElement("div");
@@ -89,7 +84,7 @@ function toggleTrack(offer: TrackedOffers): void {
     if (!confirm("Ви впевнені, що хочете видалити цю пропозицію зі списку відстежуваних?"))
         return;
 
-    removeFromTrackedOffers(String(offer.offerId));
+    StorageService.removeFromTracked(offer.offerId);
 
     const card = document.getElementById(String(offer.offerId));
     if (card)
@@ -103,6 +98,14 @@ function toggleTrack(offer: TrackedOffers): void {
 
 async function renderFullInfo(offer: TrackedOffers): Promise<void> {
     const applications = await getApplications(offer.offerId);
+
+    const popup = document.getElementById("offer-popup") as HTMLDivElement;
+    const popupOverlay = document.getElementById("popup-overlay") as HTMLDivElement;
+
+    if (!popup || !popupOverlay){
+        console.error("Missing popup!");
+        return;
+    }
 
     popup.style.display = "block";
     popupOverlay.style.display = "block";
@@ -287,6 +290,12 @@ function renderUserApplication(count: number, realCount: number, userScore: numb
 
 async function renderStudentFullInfo(studentId: number, studentName: string): Promise<void>{
     const applications: StudentApplication[] | null = await getStudentApplications(studentId);
+
+    const studentApplicationsPopup = document.getElementById("student-popup") as HTMLDivElement;
+    if (!studentApplicationsPopup) {
+        console.error("Missing student applications popup!");
+        return;
+    }
 
     studentApplicationsPopup.style.display = "block";
 

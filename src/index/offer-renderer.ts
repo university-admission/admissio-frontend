@@ -1,21 +1,24 @@
 import {educationFormLabels, Offer} from "../common/types.js";
-import {addToTrackedOffers, isTracked, removeFromTrackedOffers} from "./tracking-handler.js";
-
-const offerResponseResult = document.getElementById("result") as HTMLHeadElement;
-const offerCount = document.getElementById("offersCount") as HTMLElement;
-const offersList = document.getElementById("offers-list") as HTMLDivElement;
-
-const popup = document.getElementById("popup") as HTMLDivElement;
-const popupOverlay = document.getElementById("popup-overlay") as HTMLDivElement;
+import {StorageService} from "../common/student-score-handler.js";
 
 export function renderOffersResponses(offers: Offer[]): void {
+    const offerResponseResult = document.getElementById("result") as HTMLHeadElement;
+    const offerCount = document.getElementById("offersCount") as HTMLElement;
+    const offersList = document.getElementById("offers-list") as HTMLDivElement;
+
+    if (!offerResponseResult || !offerCount || !offersList) {
+        console.error("Offers fields not found!");
+        return;
+    }
+
     if (offers.length > 0) {
-        offerResponseResult.textContent = "Результати пошуку, кількість пропозицій: "
+        offerResponseResult.textContent = "Результати пошуку, кількість пропозицій: ";
         offerResponseResult.appendChild(offerCount);
         offerCount.textContent = String(offers.length);
     }
     else{
-        offerResponseResult.textContent = "За даним запитом не знайдено пропозицій"
+        offerResponseResult.textContent = "За даним запитом не знайдено пропозицій";
+        offerResponseResult.appendChild(offerCount);
         offerCount.textContent = "";
     }
 
@@ -83,7 +86,7 @@ function renderPartOFOffer(offer: Offer): HTMLElement {
     offerElement.appendChild(placesInfo);
 
     const trackBtn = document.createElement("button");
-    if (isTracked(String(offer.id))){
+    if (StorageService.isTracked(offer.id)){
         trackBtn.textContent = "Перестати відстежувати";
         trackBtn.classList.add("tracked");
     }
@@ -107,18 +110,26 @@ function renderPartOFOffer(offer: Offer): HTMLElement {
 }
 
 function toggleTrack(offer: Offer, button: HTMLButtonElement){
-    if (isTracked(String(offer.id))) {
+    if (StorageService.isTracked(offer.id)) {
         button.textContent = "Відстежувати";
         button.classList.remove("tracked");
-        removeFromTrackedOffers(String(offer.id));
+        StorageService.removeFromTracked(offer.id);
     } else {
         button.textContent = "Перестати відстежувати";
         button.classList.add("tracked");
-        addToTrackedOffers(String(offer.id));
+        StorageService.addToTracked(offer.id);
     }
 }
 
 function renderOfferFullInfo(offer: Offer): void {
+    const popup = document.getElementById("popup") as HTMLDivElement;
+    const popupOverlay = document.getElementById("popup-overlay") as HTMLDivElement;
+
+    if (!popupOverlay || !popup) {
+        console.error("Popup not found!");
+        return;
+    }
+
     popup.style.display = "block";
     popupOverlay.style.display = "block";
 
@@ -163,5 +174,4 @@ function renderOfferFullInfo(offer: Offer): void {
     setMajorInfoRow("physics-row", offer.major.physicsCoef, offer.minPhysicsScore);
     setMajorInfoRow("chemistry-row", offer.major.chemistryCoef, offer.minChemistryScore);
     setMajorInfoRow("competition-row", offer.major.competitionCoef, offer.minCompetitionScore);
-
 }

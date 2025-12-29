@@ -3,38 +3,37 @@ import {renderOffersResponses} from "./offer-renderer.js";
 import {get} from "../common/api-client.js";
 import {ENDPOINTS} from "../common/config.js";
 
+export function initSearchPage(): void {
+    const regionInput = document.getElementById("region-field") as HTMLInputElement;
+    const universityInput = document.getElementById("university-field") as HTMLInputElement;
 
-const regionInput = document.getElementById("region-field") as HTMLInputElement;
-const universityInput = document.getElementById("university-field") as HTMLInputElement;
-const majorInput = document.getElementById("major-field") as HTMLInputElement;
-const educationFormInput = document.getElementById("education-form") as HTMLSelectElement;
+    const regionList = document.getElementById("regions") as HTMLDataListElement;
 
-const regionList = document.getElementById("regions") as HTMLDataListElement;
-const universityList = document.getElementById("universities") as HTMLDataListElement;
-const majorList = document.getElementById("majors") as HTMLDataListElement;
+    const searchButton = document.getElementById("search-button") as HTMLButtonElement;
 
-const searchButton = document.getElementById("search-button") as HTMLButtonElement;
+    searchButton.addEventListener("click", async (event) => {
+        event.preventDefault();
+        await loadOffers();
+    })
 
-searchButton.addEventListener("click", async (event) => {
-    event.preventDefault();
-    await loadOffers();
-})
+    regionInput.addEventListener("change", async () => {
+        const selectedOption = Array.from(regionList.options).find(
+            (option) => option.value === regionInput.value.trim()
+        );
 
-regionInput.addEventListener("change", async () => {
-    const selectedOption = Array.from(regionList.options).find(
-        (option) => option.value === regionInput.value.trim()
-    );
+        if (selectedOption) {
+            universityInput.value = "";
+            const regionName = selectedOption.value;
+            if (regionName) await loadUniversities(regionName);
+        }
+        else
+            await loadUniversities();
+    });
 
-    if (selectedOption) {
-        universityInput.value = "";
-        const regionName = selectedOption.value;
-        if (regionName) await loadUniversities(regionName);
-    }
-    else
-        await loadUniversities();
-});
+    void loadData();
+}
 
-export async function loadData(): Promise<void> {
+async function loadData(): Promise<void> {
     await loadMajors();
     await loadRegions();
     await loadUniversities();
@@ -42,6 +41,12 @@ export async function loadData(): Promise<void> {
 }
 
 async function loadEducationForms(): Promise<void> {
+    const educationFormInput = document.getElementById("education-form") as HTMLSelectElement;
+    if (!educationFormInput) {
+        console.error("Missing education form input!");
+        return;
+    }
+
     try {
         const educationForms = await get<string[]>(ENDPOINTS.EDUCATION_FORM);
 
@@ -64,15 +69,31 @@ async function loadEducationForms(): Promise<void> {
     }
 }
 
-function getSelectedId(
-    options: ArrayLike<HTMLOptionElement>,
-    input: HTMLInputElement
-): number | null {
+function getSelectedId(options: ArrayLike<HTMLOptionElement>, input: HTMLInputElement): number | null {
     const option = Array.from(options).find(o => o.value === input.value.trim());
     return option?.dataset.id ? Number(option.dataset.id) : null;
 }
 
 async function loadOffers(): Promise<void> {
+    const regionInput = document.getElementById("region-field") as HTMLInputElement;
+    const universityInput = document.getElementById("university-field") as HTMLInputElement;
+    const majorInput = document.getElementById("major-field") as HTMLInputElement;
+
+    const regionList = document.getElementById("regions") as HTMLDataListElement;
+    const universityList = document.getElementById("universities") as HTMLDataListElement;
+    const majorList = document.getElementById("majors") as HTMLDataListElement;
+    const educationFormInput = document.getElementById("education-form") as HTMLSelectElement;
+
+    if (!regionInput || !universityInput || !majorInput) {
+        console.error("Missing data input!");
+        return;
+    }
+
+    if (!regionList || !universityList || !majorList || !educationFormInput) {
+        console.error("Missing data sets!");
+        return;
+    }
+
     const majorId = getSelectedId(majorList.options, majorInput);
     const regionId = getSelectedId(regionList.options, regionInput);
     const universityId = getSelectedId(universityList.options, universityInput);
@@ -95,6 +116,12 @@ async function loadOffers(): Promise<void> {
 }
 
 async function loadMajors(): Promise<void> {
+    const majorList = document.getElementById("majors") as HTMLDataListElement;
+    if(!majorList){
+        console.error("Missing major set!");
+        return;
+    }
+
     try {
         const majors = await get<Major[]>(ENDPOINTS.MAJORS);
         majorList.replaceChildren();
@@ -112,6 +139,12 @@ async function loadMajors(): Promise<void> {
 }
 
 async function loadRegions(): Promise<void> {
+    const regionList = document.getElementById("regions") as HTMLDataListElement;
+    if (!regionList) {
+        console.error("Missing region set!");
+        return;
+    }
+
     try {
         const regions = await get<Region[]>(ENDPOINTS.REGIONS);
         regionList.replaceChildren();
@@ -128,6 +161,12 @@ async function loadRegions(): Promise<void> {
 }
 
 async function loadUniversities(regionId: string = ""): Promise<void> {
+    const universityList = document.getElementById("universities") as HTMLDataListElement;
+    if (!universityList) {
+        console.error("Missing university set!");
+        return;
+    }
+
     try {
         const universities = await get<University[]>(ENDPOINTS.UNIVERSITIES + "?" + regionId);
         universityList.replaceChildren();
