@@ -160,7 +160,7 @@ async function loadRegions(): Promise<void> {
     }
 }
 
-async function loadUniversities(regionId: string = ""): Promise<void> {
+async function loadUniversities(region: string = ""): Promise<void> {
     const universityList = document.getElementById("universities") as HTMLDataListElement;
     if (!universityList) {
         console.error("Missing university set!");
@@ -168,7 +168,7 @@ async function loadUniversities(regionId: string = ""): Promise<void> {
     }
 
     try {
-        const universities = await get<University[]>(ENDPOINTS.UNIVERSITIES + "?" + regionId);
+        const universities = await get<University[]>(ENDPOINTS.UNIVERSITIES + "?regionName=" + region);
         universityList.replaceChildren();
         universities.forEach(university => {
             const option = document.createElement("option");
