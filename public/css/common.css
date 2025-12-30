@@ -11,6 +11,7 @@
     --button-tracked: #359a4c;
     --button-tracked-hover: #2a7b3d;
     --close-icon-color: #888;
+    --button-text-color: #000;
 
     /* Статуси (Місця) */
     --save-bg: #e9f7ec;
@@ -158,7 +159,7 @@ section h2 {
     margin-top: auto;
     padding: .5em .75em;
     background: var(--secondary-color);
-    color: white;
+    color: var(--button-text-color);
     border: none;
     border-radius: var(--border-radius);
     cursor: pointer;
@@ -248,4 +249,91 @@ button.tracked:hover {
 
 .data-table tbody tr:hover {
     background-color: #e9ecef;
+}
+
+.loader {
+    border: 4px solid var(--save-bg);
+    border-top: 4px solid var(--secondary-color);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    display: block;
+}
+
+.loader-container {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+    width: 100%;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loader-text {
+    text-align: center;
+    color: var(--text-color);
+    margin-top: 15px;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .popup {
+        width: 95%;
+        max-height: 95vh;
+        padding: 16px;
+    }
+
+    .popup-content {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .data-table {
+        border: 0;
+    }
+
+    .data-table thead {
+        display: none;
+    }
+
+    .data-table tr {
+        display: block;
+        margin-bottom: 16px;
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        background: #fff;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .data-table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #eee;
+        font-size: 0.95rem;
+        padding: 12px;
+        text-align: right;
+    }
+
+    .data-table td:last-child {
+        border-bottom: 0;
+    }
+
+    .data-table td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: var(--primary-color);
+        text-align: left;
+        margin-right: 15px;
+        flex: 1;
+    }
 }
