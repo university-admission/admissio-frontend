@@ -25,7 +25,7 @@ export interface Major{
     physicsCoef: number;
     chemistryCoef: number;
     competitionCoef: number;
-    coef : number;
+    majorCoef : number;
 }
 
 export interface Offer{
