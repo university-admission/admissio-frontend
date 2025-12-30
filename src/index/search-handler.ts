@@ -1,5 +1,5 @@
 import {educationFormLabels, Major, Offer, Region, University} from "../common/types.js";
-import {renderOffersResponses} from "./offer-renderer.js";
+import {renderLoader, renderOffersResponses} from "./offer-renderer.js";
 import {get} from "../common/api-client.js";
 import {ENDPOINTS} from "../common/config.js";
 
@@ -107,6 +107,7 @@ async function loadOffers(): Promise<void> {
     if (educationForm) params.append("educationForm", educationForm);
 
     try {
+        renderLoader();
         const offers = await get<Offer[]>(ENDPOINTS.FILTERED_OFFERS + `?${params.toString()}`);
         renderOffersResponses(offers);
     }
@@ -168,7 +169,10 @@ async function loadUniversities(region: string = ""): Promise<void> {
     }
 
     try {
-        const universities = await get<University[]>(ENDPOINTS.UNIVERSITIES + "?regionName=" + region);
+        const params = new URLSearchParams();
+        params.append("regionName", region);
+
+        const universities = await get<University[]>(ENDPOINTS.UNIVERSITIES + `?${params.toString()}`);
         universityList.replaceChildren();
         universities.forEach(university => {
             const option = document.createElement("option");
