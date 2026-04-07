@@ -1,5 +1,5 @@
 import {TrackedOffers, Application, StudentApplication, educationFormLabels} from "../common/types.js";
-import {StorageService} from "../common/student-score-handler.js";
+import {StorageService} from "../common/local-store-handler.js"
 import {applicationType, getApplications, getStudentApplications} from "./tracked-offers.js";
 
 export function renderTrackedOffer(offer: TrackedOffers): HTMLElement {

@@ -75,67 +75,8 @@ form > button.form-full-width {
     color: var(--text-color);
 }
 
-button {
-    padding: 0.75em;
-    background: var(--secondary-color);
-    border: none;
-    color: white;
-    font-size: 1rem;
-    border-radius: var(--border-radius);
-    cursor: pointer;
-}
-
-button:hover {
-    background: var(--button-hover);
-}
-
-.toast {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background-color: #4caf50;
-    color: white;
-    padding: 12px 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    font-size: 16px;
-    opacity: 0;
-    transform: translateY(20px);
-    pointer-events: none;
-    transition: opacity 0.4s ease, transform 0.4s ease;
-    z-index: 1000;
-}
-
-.toast-icon {
-    font-weight: bold;
-    font-size: 18px;
-}
-
-.toast.show {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-}
-
-.toast.hidden {
-    display: none;
-}
-
 /* --- MOBILE RESPONSIVENESS --- */
 @media (max-width: 768px) {
-
-    h2 {
-        text-align: center;
-    }
-
-    .popup {
-        width: 95%;
-        max-height: 95vh;
-        padding: 16px;
-    }
 
     .popup-content {
         display: flex;
@@ -143,44 +84,8 @@ button:hover {
         gap: 20px;
     }
 
-    .data-table {
-        border: 0;
-    }
-
-    .data-table thead {
-        display: none;
-    }
-
-    .data-table tr {
-        display: block;
-        margin-bottom: 16px;
-        border: 1px solid var(--border-color);
-        border-radius: var(--border-radius);
-        background: #fff;
-        box-shadow: var(--shadow-sm);
-    }
-
-    .data-table td {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 1px solid #eee;
-        font-size: 0.95rem;
-        padding: 12px;
-        text-align: right;
-    }
-
-    .data-table td:last-child {
-        border-bottom: 0;
-    }
-
-    .data-table td::before {
-        content: attr(data-label);
-        font-weight: bold;
-        color: var(--primary-color);
-        text-align: left;
-        margin-right: 15px;
-        flex: 1;
+    h2 {
+        text-align: center;
     }
 
     form {

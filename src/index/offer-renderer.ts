@@ -1,5 +1,21 @@
 import {educationFormLabels, Offer} from "../common/types.js";
-import {StorageService} from "../common/student-score-handler.js";
+import {StorageService} from "../common/local-store-handler.js"
+
+export function renderLoader(): void {
+    const offersList = document.getElementById("offers-list") as HTMLDivElement;
+
+    if (!offersList) {
+        console.error("Offers list not found!");
+        return;
+    }
+
+    offersList.innerHTML = `
+        <div class="loader-container">
+            <div class="loader"></div>
+            <h3 class="loader-text">Пошук пропозицій...</h3>
+        </div>
+        `;
+}
 
 export function renderOffersResponses(offers: Offer[]): void {
     const offerResponseResult = document.getElementById("result") as HTMLHeadElement;
@@ -156,7 +172,7 @@ function renderOfferFullInfo(offer: Offer): void {
     setPlacesRow("contract-row", offer.contractPlaces, offer.contractApplications, offer.minContractScore);
 
     (document.querySelector("#popup-region-coef span") as HTMLElement).textContent = String(offer.regionCoef);
-    (document.querySelector("#popup-major-coef span") as HTMLElement).textContent = String(offer.major.coef);
+    (document.querySelector("#popup-major-coef span") as HTMLElement).textContent = String(offer.major.majorCoef);
 
     const setMajorInfoRow = (rowId: string, coef: number, minScore: number) => {
         const row = document.getElementById(rowId) as HTMLTableRowElement;

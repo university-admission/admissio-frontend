@@ -13,4 +13,9 @@ export const ENDPOINTS = {
     MAJORS: `${API_BASE_URL}/majors`,
 
     UNIVERSITIES: `${API_BASE_URL}/universities`,
+
+    LOGIN: `${API_BASE_URL}/login`,
+
+    UPLOAD_STUDENTS: `${API_BASE_URL}/upload/students`,
+    UPLOAD_APPLICATIONS: `${API_BASE_URL}/upload/applications`,
 } as const;

@@ -25,7 +25,7 @@ export interface Major{
     physicsCoef: number;
     chemistryCoef: number;
     competitionCoef: number;
-    coef : number;
+    majorCoef : number;
 }
 
 export interface Offer{
@@ -109,4 +109,10 @@ export interface StudentApplication{
     universityName: string;
     facultyName: string;
     majorName: string;
+}
+
+export interface JwtResponse {
+    token: string;
+    type: string;
+    username: string;
 }

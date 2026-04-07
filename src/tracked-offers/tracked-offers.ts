@@ -2,7 +2,7 @@ import {Application, StudentApplication, TrackedOffers} from "../common/types.js
 import {renderTrackedOffer} from "./tracked-offer-renderer.js"
 import {get, post} from "../common/api-client.js";
 import {ENDPOINTS} from "../common/config.js";
-import {STORAGE_KEYS, StorageService} from "../common/student-score-handler.js";
+import {STORAGE_KEYS, StorageService} from "../common/local-store-handler.js"
 
 export let applicationType: HTMLSpanElement;
 
@@ -108,7 +108,12 @@ export async function getApplications(offerId: number): Promise<Application[] | 
     if (admissioType === 'quota-2') quotaType = "QUOTA_2";
 
     try {
-        return await get<Application[]>(ENDPOINTS.APPLICATIONS + `?offerId=${offerId}&quotaType=${quotaType}&isBudget=${admissioType !== "contract"}`)
+        const params = new URLSearchParams();
+        params.append("offerId", String(offerId));
+        params.append("quotaType", String(quotaType));
+        params.append("isBudget", String(admissioType !== "contract"))
+
+        return await get<Application[]>(ENDPOINTS.APPLICATIONS + `?${params.toString()}`);
     }
     catch (error) {
         console.error("Error loading applications for offer: ", error);
@@ -119,7 +124,9 @@ export async function getApplications(offerId: number): Promise<Application[] | 
 export async function getStudentApplications(studentId: number): Promise<StudentApplication[] | null> {
 
     try {
-        return await get<StudentApplication[]>(ENDPOINTS.STUDENT_APPLICATIONS + `?studentId=${studentId}`);
+        const params = new URLSearchParams();
+        params.append("studentId", String(studentId));
+        return await get<StudentApplication[]>(ENDPOINTS.STUDENT_APPLICATIONS + `?${params.toString()}`);
     }
     catch (error) {
         console.error("Error loading student applications: ", error);
