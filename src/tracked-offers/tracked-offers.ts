@@ -2,7 +2,7 @@ import {Application, StudentApplication, TrackedOffers} from "../common/types.js
 import {renderTrackedOffer} from "./tracked-offer-renderer.js"
 import {get, post} from "../common/api-client.js";
 import {ENDPOINTS} from "../common/config.js";
-import {STORAGE_KEYS, StorageService} from "../common/student-score-handler.js";
+import {STORAGE_KEYS, StorageService} from "../common/local-store-handler.js"
 
 export let applicationType: HTMLSpanElement;
 

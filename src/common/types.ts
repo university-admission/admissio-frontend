@@ -110,3 +110,9 @@ export interface StudentApplication{
     facultyName: string;
     majorName: string;
 }
+
+export interface JwtResponse {
+    token: string;
+    type: string;
+    username: string;
+}

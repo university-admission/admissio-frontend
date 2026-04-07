@@ -1,4 +1,5 @@
-import {StorageService, STORAGE_KEYS} from "../common/student-score-handler.js"
+import {StorageService, STORAGE_KEYS} from "../common/local-store-handler.js"
+import {showToast} from "../common/toast.js";
 
 let mathField: HTMLInputElement;
 let ukLangField: HTMLInputElement;
@@ -75,26 +76,4 @@ export function loadStudentScore() : void {
     electiveSubjectField.value = StorageService.getString(STORAGE_KEYS.ELECTIVE_SCORE);
     competitionField.value = StorageService.getString(STORAGE_KEYS.COMPETITION);
     admissionType.value = StorageService.getString(STORAGE_KEYS.ADMISSION_TYPE) ?? admissionType.options[0].value;
-}
-
-function showToast(message: string): void {
-    const toast = document.getElementById("toast") as HTMLDivElement;
-    const messageSpan = document.getElementById("toast-message") as HTMLSpanElement;
-
-    if (!toast || !messageSpan) {
-        console.log("Missing required toast message!");
-        return;
-    }
-
-    messageSpan.textContent = message;
-    toast.classList.remove("hidden");
-
-    setTimeout(() => {
-        toast.classList.add("show");
-    }, 10);
-
-    setTimeout(() => {
-        toast.classList.remove("show");
-        setTimeout(() => toast.classList.add("hidden"), 400);
-    }, 2500);
 }

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Є-Бюджет | Адмін-панель </title>
+    <meta name="description" content="Є-Бюджет — сервіс для абітурієнтів. Зручний пошук пропозицій ВНЗ, відстеження рейтингових списків та розрахунок шансів на вступ.">
+
+    <meta name="author" content="Bezukh Danylo">
+    <link rel="stylesheet" href="./css/upload.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="./images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="./images/favicon/site.webmanifest">
+</head>
+<body>
+<header>
+    <h1>Є-Бюджет — Адмін-панель</h1>
+    <nav>
+        <a href="./upload.html">Завантаження баз</a>
+        <a href="#" id="logout-btn">Вийти</a>
+    </nav>
+</header>
+
+<main class="container">
+    <section class="upload-section">
+        <h2>Оновлення бази студентів</h2>
+        <div class="alert alert-danger">
+            <strong>Увага:</strong> Завантаження нового CSV файлу повністю видалить старі дані про студентів та замінить їх на нові.
+        </div>
+        <form id="upload-students-form" enctype="multipart/form-data">
+            <label for="students-file" class="file-label">Оберіть файл (тільки .csv):</label>
+            <input type="file" id="students-file" name="file" accept=".csv" required>
+
+            <button type="submit" class="form-full-width">Завантажити базу студентів</button>
+        </form>
+    </section>
+
+    <section class="upload-section">
+        <h2>Оновлення бази заяв</h2>
+        <div class="alert alert-danger">
+            <strong>Увага:</strong> Завантаження нового CSV файлу повністю видалить старі дані про заяви та замінить їх на нові.
+        </div>
+        <form id="upload-applications-form" enctype="multipart/form-data">
+            <label for="applications-file" class="file-label">Оберіть файл (тільки .csv):</label>
+            <input type="file" id="applications-file" name="file" accept=".csv" required>
+
+            <button type="submit" class="form-full-width">Завантажити базу заяв</button>
+        </form>
+    </section>
+</main>
+
+<div id="toast" class="toast hidden">
+    <span class="toast-icon" id="toast-icon"></span>
+    <span id="toast-message"></span>
+</div>
+<script type="module" src="./js/common/main.js"></script>
+</body>
+</html>

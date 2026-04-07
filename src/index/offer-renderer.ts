@@ -1,5 +1,5 @@
 import {educationFormLabels, Offer} from "../common/types.js";
-import {StorageService} from "../common/student-score-handler.js";
+import {StorageService} from "../common/local-store-handler.js"
 
 export function renderLoader(): void {
     const offersList = document.getElementById("offers-list") as HTMLDivElement;

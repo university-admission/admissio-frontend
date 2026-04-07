@@ -6,7 +6,10 @@ export const STORAGE_KEYS = {
     ELECTIVE_SCORE: 'elective-subject-score',
     COMPETITION: 'competition-score',
     ADMISSION_TYPE: 'admission-type',
-    TRACKED_OFFERS: 'trackedOffers'
+    TRACKED_OFFERS: 'trackedOffers',
+
+    AUTH_TOKEN: 'auth-token',
+    USERNAME: 'auth-username'
 } as const;
 
 export const StorageService = {
@@ -44,5 +47,33 @@ export const StorageService = {
     isTracked(offerId: number): boolean {
         const trackedOffers = this.getTrackedOffers();
         return trackedOffers.includes(offerId);
-    }
+    },
+
+    setToken(token: string): void { localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, token); },
+
+    getToken(): string { return this.getString(STORAGE_KEYS.AUTH_TOKEN); },
+
+    isLoggedIn(): boolean {
+        const token = this.getToken();
+        if (!token) return false;
+
+        try {
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            const expiryDate = payload.exp * 1000;
+
+            if (Date.now() >= expiryDate) {
+                this.logout();
+                return false;
+            }
+            return true;
+        } catch (e) {
+            this.logout();
+            return false;
+        }
+    },
+
+    logout(): void {
+        localStorage.removeItem(STORAGE_KEYS.USERNAME);
+        localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
+    },
 };
